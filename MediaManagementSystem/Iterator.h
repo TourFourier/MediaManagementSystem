@@ -1,14 +1,14 @@
 #pragma once
 #include "TNode.h"
-#include "CLinkedList.h"
+//#include "CLinkedList.h"
 
 
 template<class T>
 class Iterator
 {
-	TNode<T>* m_rBegin;
 public:
-	Iterator(TNode<T>* a) { m_rBegin = a; }
+	T* m_rBegin;
+	Iterator() { }
 	~Iterator() {}
 
 	T& Next();

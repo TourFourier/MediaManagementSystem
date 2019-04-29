@@ -1,6 +1,6 @@
 #pragma once
 #include "TNode.h"
-#include "CLinkedList.h"
+//#include "CLinkedList.h"
 #include "Iterator.h"
 
 
@@ -8,12 +8,15 @@ template<class T>
 class Collection
 {
 private:
-	TNode<T>* a = nullptr;
+	T* m_phead = nullptr;
 	Iterator<T> m_collectionIterator;
 	//CLinkedList<T> m_collectionList;
 	int m_listSize = 0;
 public:
-	Collection():Iterator(a) {}
+	Collection() 
+	{
+		m_collectionIterator.m_rBegin = m_phead;
+	}
 	~Collection() {}
 
 	void Add( T* newFile);
