@@ -1,13 +1,25 @@
 
 #include "pch.h"
 #include <iostream>
+#include "TNode.h"
+#include "CLinkedList.h"
+#include "Iterator.h"
+#include "Collection.h"
 using std::ostream;
 using std::cout;
 using std::endl;
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	Collection<int> co;
+	//int* i = new int(7);
+	//TNode<int>* n = new TNode<int>(i);
+	//co.Add(new int(7));
+	//co.Add(new int(8));
+
+
+	//cout<<co.Size()<<endl;
+	//cout<<(ll.GetNode(to_string(11))->GetData());
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
