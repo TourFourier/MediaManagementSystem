@@ -7,8 +7,8 @@ template<class T>
 class Iterator
 {
 public:
-	T* m_rBegin;
-	Iterator() { }
+	TNode<T>* m_rBegin;
+	Iterator() {}
 	~Iterator() {}
 
 	T& Next();
@@ -19,7 +19,7 @@ public:
 template<class T>
 T& Iterator<T>::Next()
 {
-	//TNode<T>* nodeRef = m_collectionList.GetHead();
+	
 }
 
 template<class T>
