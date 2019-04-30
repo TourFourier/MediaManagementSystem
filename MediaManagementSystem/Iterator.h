@@ -1,14 +1,20 @@
 #pragma once
+//#include "Collection.h"
 #include "TNode.h"
-//#include "CLinkedList.h"
 
 
 template<class T>
 class Iterator
 {
+private:
+	//Collection<T>* m_pCollection;
 public:
-	TNode<T>* m_rBegin;
-	Iterator() {}
+	TNode<T>* m_pBegin;
+
+	Iterator(/*Collection<T>* c*/) 
+	{ 
+		//m_pCollection = c; 
+	}
 	~Iterator() {}
 
 	T& Next();
@@ -19,7 +25,9 @@ public:
 template<class T>
 T& Iterator<T>::Next()
 {
-	
+	TNode<T>* temp = m_pBegin;
+	//T arr[m_pCollection->Size()];
+	while (!temp->GetNext() == nullptr) {}
 }
 
 template<class T>

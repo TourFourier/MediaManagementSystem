@@ -3,33 +3,77 @@
 #include <iostream>
 #include <string>
 #include "TNode.h"
-//#include "CLinkedList.h"
 #include "Iterator.h"
 #include "Collection.h"
 using std::ostream;
 using std::cout;
 using std::endl;
+using std::string;
 
 int main()
 {
 	Collection<int> co;
+	/*
+		Collection<string> stringCollection;
+		stringCollection.Add("Hello");
+		stringCollection.Add("World");
+		Iterator<string> itr = stringCollection.GetIterator();
+		while (itr.HasNext())
+		{
+			cout << itr.Next() << endl;
+		}
+		itr = stringCollection.GetIterator();
+		while (itr.HasNext())
+		{
+			const string& s = itr.Next();
+			if (s == "Hello")
+			{
+				cout << s << endl;
+			}		
+			else
+		    {
+				itr.Remove();
+			}
+		}
+		cout << "there are " << stringCollection.Size() << " elements in the collection. " << endl;
+		itr = stringCollection.GetIterator();
+		while (itr.HasNext())
+		{
+			cout << itr.Next() << endl;
+		}
+		stringCollection.Add("A");
+		stringCollection.Add("B");
+		stringCollection.Add("a");
+		stringCollection.Add("b");
+		stringCollection.Add("shalom");
+		cout << "there are " << stringCollection.Size() << " elements in the collection. " << endl;
+
+		itr = stringCollection.GetIterator();
+
+		while (itr.HasNext())
+		{
+			cout << "removing " << itr.Next() << endl;
+			itr.Remove();
+		}
+		if (!itr.HasNext())
+		{
+			cout << "No more elements!" << endl;
+		}
+		return 0;
+	*/
 	//int* i = new int(7);
 	//TNode<int>* n = new TNode<int>(i);
-	//co.Add(new int(7));
-	//co.Add(new int(8));
+	co.Add(7);
+	co.Add(8);
+	co.Add(3);
+	co.Add(9);
+	co.Add(2);
+	co.Add(4);
+	co.printList();
+
 
 
 	//cout<<co.Size()<<endl;
 	//cout<<(ll.GetNode(to_string(11))->GetData());
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
