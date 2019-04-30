@@ -45,7 +45,7 @@ void Collection<T>::Add( T newFile)
 	{
 		int i = 0;
 		TNode<T>* temp;
-		T dataArray[m_listSize] = { 0 };
+		T* dataArray = new T[m_listSize];
 		// Adding new node
 		TNode<T>* newNode = new TNode<T>(newFile);
 		newNode->SetNext(m_pHead);

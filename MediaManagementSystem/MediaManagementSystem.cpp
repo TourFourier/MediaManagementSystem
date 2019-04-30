@@ -68,7 +68,10 @@ int main()
 	co.Add(3);
 	co.Add(9);
 	co.Add(2);
+	co.Add(2);
 	co.Add(4);
+	co.Add(15);
+
 	co.printList();
 
 
