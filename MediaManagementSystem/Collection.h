@@ -15,7 +15,8 @@ private:
 public:
 	Collection() {m_collectionIterator.m_pBegin = m_pHead;}
 	~Collection() {}
-	void printList()
+
+			void printList()
 	{
 		//TNode<T>* temp = m_pHead;
 		while (m_pHead != nullptr)
@@ -24,8 +25,9 @@ public:
 			m_pHead = m_pHead->GetNext();
 		}
 	}
+
 	void Add( T newFile);
-	const int Size() const { return m_listSize; };
+	 int Size()  { return m_listSize; };
 	Iterator<T> GetIterator() { return m_collectionIterator; }
 };
 
@@ -33,10 +35,7 @@ public:
 template<class T>
 void Collection<T>::Add( T newFile) 
 {
-	int i = 0;
-	int size = this->Size();
-	TNode<T>* temp;
-	T dataArray[6] = { 0 };
+	++m_listSize;
 	// If list is empty, asign node as head/first node
 	if (m_pHead == nullptr) 
 	{
@@ -44,6 +43,9 @@ void Collection<T>::Add( T newFile)
 	}
 	else // Add new node to list at head and sort the list
 	{
+		int i = 0;
+		TNode<T>* temp;
+		T dataArray[m_listSize] = { 0 };
 		// Adding new node
 		TNode<T>* newNode = new TNode<T>(newFile);
 		newNode->SetNext(m_pHead);
@@ -59,7 +61,7 @@ void Collection<T>::Add( T newFile)
 			i++;
 		}
 		
-		bubbleSort(dataArray, size);
+		bubbleSort(dataArray, m_listSize);
 		// Insert data into list in sorted order
 		i = 0;
 		temp = m_pHead;
@@ -70,7 +72,6 @@ void Collection<T>::Add( T newFile)
 			i++;
 		}
 	}
-	m_listSize++;
 }
 
 template<class T>
