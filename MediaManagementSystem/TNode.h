@@ -7,6 +7,7 @@ private:
 	T m_pData;
 	TNode<T>* m_pNext = nullptr;
 public:
+	TNode() {}
 	TNode(T rData) {m_pData = rData;}
 	~TNode() {};
 

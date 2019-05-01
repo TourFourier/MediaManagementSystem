@@ -12,9 +12,8 @@ using std::string;
 
 int main()
 {
-	Collection<int> co;
-	Iterator<int> it = co.GetIterator();
-	/*
+	
+	
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
 		stringCollection.Add("World");
@@ -23,7 +22,7 @@ int main()
 		{
 			cout << itr.Next() << endl;
 		}
-		itr = stringCollection.GetIterator();
+		/*itr = stringCollection.GetIterator();
 		while (itr.HasNext())
 		{
 			const string& s = itr.Next();
@@ -59,25 +58,47 @@ int main()
 		if (!itr.HasNext())
 		{
 			cout << "No more elements!" << endl;
-		}
+		}*/
 		return 0;
-	*/
+	
+	
+	
+	//Collection<int> co;
+	//Iterator<int> it = co.GetIterator();
 	//int* i = new int(7);
 	//TNode<int>* n = new TNode<int>(i);
-	co.Add(7);
+	/*co.Add(7);
 	co.Add(8);
 	co.Add(3);
 	co.Add(9);
 	co.Add(2);
 	co.Add(2);
 	co.Add(4);
-	co.Add(15);
+	co.Add(15);*/
 
-	co.printList();
+	/*co.printList();
+
+	cout << it.HasNext() << endl;
 
 	cout << it.Next() << endl;
 	cout << it.Next() << endl;
 	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+
+	cout << it.HasNext() << endl;
+
+
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+	/*cout << it.Next() << endl;
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+
+	cout << it.HasNext() << endl;*/
 
 
 

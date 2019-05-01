@@ -8,46 +8,51 @@ class Collection
 {
 private:
 	TNode<T>* m_pHead = nullptr;
-	Iterator<T> m_collectionIterator;// = new Iterator<T>(this);
-	int m_listSize = 0;
+	Iterator<T> m_collectionIterator;
 	void bubbleSort(T arr[], int n);
 	void swap(T *xp, T *yp);
 
-		static T& Next(Collection<T>* pThis) 
+		/*static T& Next(Collection<T>* pThis) 
 		{
 			T retVal = pThis->m_pHead->GetData();
 			pThis->m_pHead = pThis->m_pHead->GetNext();
 			return retVal;
-		}
+		}*/
 public:
 	Collection()
 	{
-		m_collectionIterator.m_pBegin = &m_pHead;//this makes the iter point to null when coll is instantiated. however ,when mphead is updated,mpbegin is not and still points to null
-		//m_collectionIterator.m_pCollection = this;
+		m_collectionIterator.m_pBegin = &m_pHead;
 	}
 	~Collection() {}
 
 			void printList()
-	{
-		//TNode<T>* temp = m_pHead;
-		while (m_pHead != nullptr)
-		{
-			std::cout << m_pHead->GetData() << std::endl;
-			m_pHead = m_pHead->GetNext();
-		}
-	}
+			{
+				TNode<T>* temp = m_pHead;
+				while (temp != nullptr)
+				{
+					std::cout << temp->GetData() << std::endl;
+					temp = temp->GetNext();
+				}
+			}
 			//friend class Iterator<T>;
 
 	void Add( T newFile);
-	int Size()  { return m_listSize; };
-	Iterator<T> GetIterator() { return m_collectionIterator; }
+	int Size();
+	Iterator<T> GetIterator() 
+	{
+		// Null Iterator's m_pCurrent pointer, so that Iterator's Next() method gives access to the first element in  the list
+		m_collectionIterator.m_pCurrent = nullptr;
+		m_collectionIterator.m_pPrevious = nullptr;
+		return m_collectionIterator; 
+	}
 };
+
+
 
 
 template<class T>
 void Collection<T>::Add( T newFile) 
 {
-	++m_listSize;
 	// If list is empty, asign node as head/first node
 	if (m_pHead == nullptr) 
 	{
@@ -56,6 +61,7 @@ void Collection<T>::Add( T newFile)
 	else // Add new node to list at head and sort the list
 	{
 		int i = 0;
+		int m_listSize = (Size()+1);
 		TNode<T>* temp;
 		T* dataArray = new T[m_listSize];
 		// Adding new node
@@ -86,6 +92,20 @@ void Collection<T>::Add( T newFile)
 		delete[]dataArray;
 	}
 }
+
+template<class T>
+int Collection<T>::Size()
+{
+	int retVal = 0;
+	TNode<T>* temp = m_pHead;
+
+	while (temp != nullptr)
+	{
+		retVal++;
+		temp = temp->GetNext();
+	}
+	return retVal;
+};
 
 template<class T>
 void Collection<T>::swap(T *xp, T *yp)
