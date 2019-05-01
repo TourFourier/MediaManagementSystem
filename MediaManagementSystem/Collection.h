@@ -12,8 +12,19 @@ private:
 	int m_listSize = 0;
 	void bubbleSort(T arr[], int n);
 	void swap(T *xp, T *yp);
+
+		static T& Next(Collection<T>* pThis) 
+		{
+			T retVal = pThis->m_pHead->GetData();
+			pThis->m_pHead = pThis->m_pHead->GetNext();
+			return retVal;
+		}
 public:
-	Collection() {m_collectionIterator.m_pBegin = m_pHead;}
+	Collection()
+	{
+		m_collectionIterator.m_pBegin = &m_pHead;//this makes the iter point to null when coll is instantiated. however ,when mphead is updated,mpbegin is not and still points to null
+		//m_collectionIterator.m_pCollection = this;
+	}
 	~Collection() {}
 
 			void printList()
@@ -25,9 +36,10 @@ public:
 			m_pHead = m_pHead->GetNext();
 		}
 	}
+			//friend class Iterator<T>;
 
 	void Add( T newFile);
-	 int Size()  { return m_listSize; };
+	int Size()  { return m_listSize; };
 	Iterator<T> GetIterator() { return m_collectionIterator; }
 };
 
@@ -71,6 +83,7 @@ void Collection<T>::Add( T newFile)
 			temp = temp->GetNext();
 			i++;
 		}
+		delete[]dataArray;
 	}
 }
 
