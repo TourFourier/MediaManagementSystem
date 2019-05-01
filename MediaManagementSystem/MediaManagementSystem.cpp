@@ -13,6 +13,7 @@ using std::string;
 int main()
 {
 	Collection<int> co;
+	Iterator<int> it = co.GetIterator();
 	/*
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
@@ -73,6 +74,11 @@ int main()
 	co.Add(15);
 
 	co.printList();
+
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+	cout << it.Next() << endl;
+
 
 
 

@@ -1,6 +1,6 @@
 #pragma once
-//#include "Collection.h"
 #include "TNode.h"
+//#include "Collection.h"
 
 
 template<class T>
@@ -9,7 +9,8 @@ class Iterator
 private:
 	Collection<T>* m_pCollection;
 public:
-	TNode<T>* m_pBegin;
+	TNode<T>** m_pBegin;
+	//Collection<T>* m_pCollection;
 
 	Iterator(Collection<T>* c) 
 	{ 
@@ -23,11 +24,14 @@ public:
 };
 
 template<class T>
-T& Iterator<T>::Next()
+T& Iterator<T>::Next() 
 {
-	TNode<T>* temp = m_pBegin;
-	//T arr[m_pCollection->Size()];
-	while (!temp->GetNext() == nullptr) {}
+	//return Collection::Next(m_pCollection);
+	T retVal = (*m_pBegin)->GetData();
+	m_pBegin = &((*m_pBegin)->GetNext());
+	return retVal;
+	//T* retVal = m_pHead->GetData();
+	//return retVal;
 }
 
 template<class T>
