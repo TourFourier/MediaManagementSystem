@@ -8,12 +8,12 @@ class Collection
 {
 private:
 	TNode<T>* m_pHead = nullptr;
-	Iterator<T> m_collectionIterator;// = new Iterator<T>(this);
+	Iterator<T>* m_collectionIterator;// = new Iterator<T>(this);
 	int m_listSize = 0;
 	void bubbleSort(T arr[], int n);
 	void swap(T *xp, T *yp);
 public:
-	Collection() {m_collectionIterator.m_pBegin = m_pHead;}
+	Collection() {m_collectionIterator = new Iterator<T>(this);}
 	~Collection() {}
 
 			void printList()
@@ -28,7 +28,7 @@ public:
 
 	void Add( T newFile);
 	 int Size()  { return m_listSize; };
-	Iterator<T> GetIterator() { return m_collectionIterator; }
+	Iterator<T> GetIterator() { return *m_collectionIterator; }
 };
 
 

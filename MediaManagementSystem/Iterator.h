@@ -7,13 +7,13 @@ template<class T>
 class Iterator
 {
 private:
-	//Collection<T>* m_pCollection;
+	Collection<T>* m_pCollection;
 public:
 	TNode<T>* m_pBegin;
 
-	Iterator(/*Collection<T>* c*/) 
+	Iterator(Collection<T>* c) 
 	{ 
-		//m_pCollection = c; 
+		m_pCollection = c; 
 	}
 	~Iterator() {}
 
