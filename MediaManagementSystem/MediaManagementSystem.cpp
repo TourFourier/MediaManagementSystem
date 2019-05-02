@@ -17,6 +17,8 @@ int main()
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
 		stringCollection.Add("World");
+		//stringCollection.Add("Zen");
+
 		Iterator<string> itr = stringCollection.GetIterator();
 		while (itr.HasNext())
 		{
@@ -36,7 +38,7 @@ int main()
 			}
 		}
 		cout << "there are " << stringCollection.Size() << " elements in the collection. " << endl;
-		/*itr = stringCollection.GetIterator();
+		itr = stringCollection.GetIterator();
 		while (itr.HasNext())
 		{
 			cout << itr.Next() << endl;
@@ -58,7 +60,7 @@ int main()
 		if (!itr.HasNext())
 		{
 			cout << "No more elements!" << endl;
-		}*/
+		}
 		return 0;
 	
 	

@@ -8,7 +8,7 @@ class Iterator
 {
 private:
 	bool haventStarted = true;
-	bool calledNext = false;
+	bool calledNext = false;// Used for check when calling Remove()
 	TNode<T>* m_pPrevious = nullptr;
 	TNode<T>* m_pCurrent = nullptr;
 public:
@@ -31,22 +31,24 @@ T& Iterator<T>::Next()
 	// retVal must be on the heap to be returned as a reference
 	T* retVal = new T;
 
+	// Haven't started traversing list and the list is not empty
 	if (haventStarted  &&  *m_pBegin != nullptr)
 	{
+		// Retrieve the value of the first node and save it in retVal
 		*retVal = (*m_pBegin)->GetData();
 		m_pPrevious = *m_pBegin;
 		m_pCurrent = (*m_pBegin)->GetNext();
 		haventStarted = false;
 		calledNext = true;
 	}
-	else if (!haventStarted  &&  m_pCurrent != nullptr)
+	else if (!haventStarted  &&  m_pCurrent != nullptr)// Have started, but haven't reached the end
 	{
 		*retVal = m_pCurrent->GetData();
 		m_pPrevious = m_pCurrent;
 		m_pCurrent = m_pCurrent->GetNext();
 		calledNext = true;
 	}
-	else
+	else// Either the list is empty or have reached the end
 	{
 		 *retVal = static_cast<T>(0);
 		 calledNext = false;
@@ -80,10 +82,20 @@ void Iterator<T>::Remove()
 		*m_pBegin = m_pCurrent;
 		*m_pBegin = temp;
 		calledNext = false;*/
-		m_pCurrent = m_pCurrent->GetNext();
-		m_pPrevious->SetNext(m_pCurrent);
-		delete m_pPrevious;
-		calledNext = false;
 
+		// We are not deleting last node
+		if (m_pCurrent != nullptr)
+		{
+			m_pPrevious->SetNext(m_pCurrent->GetNext());
+			delete m_pCurrent;
+			m_pCurrent = m_pPrevious->GetNext();
+		}
+		else // We are deleting last node
+		{
+			// delete last node and set previous nodes next to point to null
+			delete m_pPrevious;
+			m_pPrevious = m_pCurrent;
+		}
+			calledNext = false;
 	}
 }
