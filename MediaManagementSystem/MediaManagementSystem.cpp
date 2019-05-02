@@ -22,7 +22,7 @@ int main()
 		{
 			cout << itr.Next() << endl;
 		}
-		/*itr = stringCollection.GetIterator();
+		itr = stringCollection.GetIterator();
 		while (itr.HasNext())
 		{
 			const string& s = itr.Next();
@@ -36,7 +36,7 @@ int main()
 			}
 		}
 		cout << "there are " << stringCollection.Size() << " elements in the collection. " << endl;
-		itr = stringCollection.GetIterator();
+		/*itr = stringCollection.GetIterator();
 		while (itr.HasNext())
 		{
 			cout << itr.Next() << endl;
