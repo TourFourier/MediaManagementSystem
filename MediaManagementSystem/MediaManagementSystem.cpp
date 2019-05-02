@@ -17,7 +17,6 @@ int main()
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
 		stringCollection.Add("World");
-		//stringCollection.Add("Zen");
 
 		Iterator<string> itr = stringCollection.GetIterator();
 		while (itr.HasNext())
