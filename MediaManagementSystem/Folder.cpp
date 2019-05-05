@@ -52,7 +52,7 @@ bool Folder::CreatedSubFolder(const char* folderName, const char* superFolder)
 	// Check if outer folder does not contain an inner folder with the same name as new folder
 	if (!(outerFolder.FolderExists(folderName)))
 	{
-		outerFolder.GetFolderCollection().Add(new Folder(folderName));
+		(outerFolder.GetFolderCollection()).Add(new Folder(folderName));
 		return true;
 	}
 	return false;

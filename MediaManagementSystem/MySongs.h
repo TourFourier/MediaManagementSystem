@@ -14,6 +14,7 @@ public:
 	Collection<Folder> GetFolderCollection() { return m_collectionFolders; }
 	Collection<Song> GetSongCollection() { return m_collectionSongs; }
 
+
 	bool AddFolder(const char* folderName, const char* superFolder);
 	bool AddSong(const char* title, const char* artist, const char* lyrics);
 	bool RemoveSong(const char* title);
