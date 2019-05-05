@@ -5,7 +5,7 @@ class Folder
 	Collection<Song> m_collectionSongs;
 	string m_sFolderName;
 public:
-	Folder(const string folderName);
+	Folder(const string folderName="");
 	~Folder();
 
 	string GetFolderName() { return m_sFolderName; }
@@ -13,6 +13,10 @@ public:
 
 	Collection<Folder> GetFolderCollection() { return m_collectionFolders; }
 	Collection<Song> GetSongCollection() { return m_collectionSongs; }
+
+	Folder& GetFolder(const char* folderName);
+	bool FolderExists(const char* folderName); 
+	bool CreatedSubFolder(const char* folderName, const char* superFolder);
 
 };
 

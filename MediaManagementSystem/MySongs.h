@@ -6,6 +6,7 @@ class MySongs
 	Collection<Song> m_collectionSongs;
 	Folder& GetFolder(const char* folderName);
 	bool FolderExists(const char* folderName);
+	bool CreatedSubFolder(const char* folderName, const char* superFolder);
 public:
 	MySongs();
 	~MySongs();
