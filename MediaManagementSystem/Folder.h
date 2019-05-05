@@ -1,4 +1,6 @@
 #pragma once
+
+
 class Folder
 {
 	Collection<Folder> m_collectionFolders;
@@ -14,9 +16,12 @@ public:
 	Collection<Folder> GetFolderCollection() { return m_collectionFolders; }
 	Collection<Song> GetSongCollection() { return m_collectionSongs; }
 
-	Folder& GetFolder(const char* folderName);
+	//Folder* GetFolder(const char* folderName);
+	bool SongExists(const string title);
 	bool FolderExists(const char* folderName); 
-	bool CreatedSubFolder(const char* folderName, const char* superFolder);
+	void CreateSubFolder(const char* folderName);
+
+	bool operator>(const Folder& f);
 
 };
 

@@ -8,7 +8,7 @@ class Song
 	string m_sArtist;
 	string m_sLyrics;
 public:
-	Song(const string title, const string artist, const string lyrics);
+	Song(const string title="", const string artist="", const string lyrics="");
 	~Song();
 
 	const string GetTitle() { return m_sTitle; }
@@ -18,5 +18,8 @@ public:
 	void SetTitle(const string title) { m_sTitle = title; }
 	void SetArtist(const string artist) { m_sArtist = artist; }
 	void SetLyrics(const string lyrics) { m_sLyrics = lyrics; }
+
+	bool operator >(const Song& s);
+
 };
 

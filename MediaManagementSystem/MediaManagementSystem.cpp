@@ -5,6 +5,8 @@
 #include "TNode.h"
 #include "Iterator.h"
 #include "Collection.h"
+#include "Song.h"
+#include "Folder.h"
 #include "MySongs.h"
 
 using std::ostream;

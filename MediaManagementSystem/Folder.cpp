@@ -6,7 +6,7 @@
 
 using std::string;
 
-Folder::Folder(const string folderName):
+Folder::Folder(const string folderName) :
 	m_sFolderName(folderName)
 {}
 
@@ -15,22 +15,36 @@ Folder::~Folder()
 {
 }
 
-
-Folder& Folder::GetFolder(const char* folderName)
+// THis is only ever called after verifying that there is a folder with this folder name
+/*Folder* Folder::GetFolder(const char* folderName)
 {
-	Folder& retVal = new Folder;
-	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	Folder* retVal = nullptr;
+	Iterator<Folder> i_collectionFolders = this->m_collectionFolders.GetIterator();
 
 	// Iterate over the collection of folders and check if the name of each existing folder matches the name of the new folder we are creating
 	while (i_collectionFolders.HasNext())
 	{
-		retVal = i_collectionFolders.Next();
-		if (retVal.GetFolderName() == folderName)
+		retVal = &(i_collectionFolders.Next());
+		if (retVal->GetFolderName() == folderName)
 		{
 			return retVal;
 		}
 	}
 
+
+}*/
+
+bool Folder::SongExists(const string title)
+{
+	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
+	while (i_collectionSongs.HasNext())
+	{
+		if (i_collectionSongs.Next().GetTitle() == title)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 bool Folder::FolderExists(const char* folderName)
@@ -46,13 +60,15 @@ bool Folder::FolderExists(const char* folderName)
 	return false;
 }
 
-bool Folder::CreatedSubFolder(const char* folderName, const char* superFolder)
+void Folder::CreateSubFolder(const char* folderName)
 {
-	Folder outerFolder = GetFolder(superFolder);
-	// Check if outer folder does not contain an inner folder with the same name as new folder
-	if (!(outerFolder.FolderExists(folderName)))
+	this->GetFolderCollection().Add(*(new Folder(folderName)));
+}
+
+bool Folder::operator >(const Folder& f)
+{
+	if (m_sFolderName > f.m_sFolderName)
 	{
-		(outerFolder.GetFolderCollection()).Add(new Folder(folderName));
 		return true;
 	}
 	return false;

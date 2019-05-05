@@ -1,12 +1,16 @@
 #pragma once
+#include "Folder.h"
+
+
 class MySongs
 {
 
 	Collection<Folder> m_collectionFolders;
 	Collection<Song> m_collectionSongs;
-	Folder& GetFolder(const char* folderName);
-	bool FolderExists(const char* folderName);
-	bool CreatedSubFolder(const char* folderName, const char* superFolder);
+	//Folder* GetFolder(const char* folderName);
+	Song* SongExists(string title);
+	Folder* FolderExists(const char* folderName);
+	bool CreatedSubFolder(const char* subFolder, Folder* superFolder);
 public:
 	MySongs();
 	~MySongs();
@@ -16,7 +20,7 @@ public:
 
 
 	bool AddFolder(const char* folderName, const char* superFolder);
-	bool AddSong(const char* title, const char* artist, const char* lyrics);
+	bool AddSong(string title, const char* artist, const char* lyrics, const char* folder);
 	bool RemoveSong(const char* title);
 	bool RemoveFolder(const char* folderName);
 	bool MoveSong(const char* tiltle, const char* destinationFolderName);

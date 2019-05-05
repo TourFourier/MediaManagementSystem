@@ -15,3 +15,13 @@ Song::Song(string title, string artist, string lyrics):
 Song::~Song()
 {
 }
+
+
+bool Song::operator >(const Song& s)
+{
+		if (m_sTitle > s.m_sTitle) 
+		{
+			return true;
+		}
+		return false;
+}
