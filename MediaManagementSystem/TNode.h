@@ -4,19 +4,19 @@ template<class T>
 class TNode
 {
 private:
-	T m_pData;
+	T m_tData;
 	TNode<T>* m_pNext = nullptr;
 public:
 	TNode() {}
-	TNode(T rData) {m_pData = rData;}
+	TNode(T rData) {m_tData = rData;}
 	~TNode() {};
 
 	//friend class Iterator<T>;
 
-	T GetData() { return m_pData; }
+	T GetData() { return m_tData; }
 	TNode<T>* GetNext() { return m_pNext; }
 
-	void SetData(T pData) { m_pData = pData; };
+	void SetData(T pData) { m_tData = pData; };
 	void SetNext(TNode<T>* pPtr) { m_pNext = pPtr; }
 };
 

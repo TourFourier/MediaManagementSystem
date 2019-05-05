@@ -7,34 +7,24 @@ template<class T>
 class Collection
 {
 private:
-	TNode<T>* m_pHead = nullptr;
+	TNode<T>* m_pCollectionListHead = nullptr;
 	Iterator<T> m_collectionIterator;
 	void bubbleSort(T arr[], int n);
 	void swap(T *xp, T *yp);
 
 		/*static T& Next(Collection<T>* pThis) 
 		{
-			T retVal = pThis->m_pHead->GetData();
-			pThis->m_pHead = pThis->m_pHead->GetNext();
+			T retVal = pThis->m_pCollectionListHead->GetData();
+			pThis->m_pCollectionListHead = pThis->m_pCollectionListHead->GetNext();
 			return retVal;
 		}*/
 public:
 	Collection()
 	{
-		m_collectionIterator.m_pBegin = &m_pHead;
+		m_collectionIterator.m_pBegin = &m_pCollectionListHead;
 	}
-	~Collection() {}
-
-			void printList()
-			{
-				TNode<T>* temp = m_pHead;
-				while (temp != nullptr)
-				{
-					std::cout << temp->GetData() << std::endl;
-					temp = temp->GetNext();
-				}
-			}
-			//friend class Iterator<T>;
+	//Alternative way to give iterator acess to list: friend class Iterator<T>;
+	~Collection() {} // TODO: ADD DELETE IN DESTRUCTOR TO m_pCollectionListHead TO DELETE THE LIST AND FREE THE HEAP??
 
 	void Add( T newFile);
 	int Size();
@@ -55,23 +45,27 @@ template<class T>
 void Collection<T>::Add( T newFile) 
 {
 	// If list is empty, asign node as head/first node
-	if (m_pHead == nullptr) 
+	if (m_pCollectionListHead == nullptr) 
 	{
-		m_pHead = new TNode<T>(newFile);
+		m_pCollectionListHead = new TNode<T>(newFile);
 	}
 	else // Add new node to list at head and sort the list
 	{
 		int i = 0;
-		int m_listSize = (Size()+1);
+		int sizeOfList;
+		T* dataArray;
 		TNode<T>* temp;
-		T* dataArray = new T[m_listSize];
+
 		// Adding new node
 		TNode<T>* newNode = new TNode<T>(newFile);
-		newNode->SetNext(m_pHead);
+		newNode->SetNext(m_pCollectionListHead);
 		// Reset head pointer
-		m_pHead = newNode;
+		m_pCollectionListHead = newNode;
 
-		temp = m_pHead;
+		// Create array of proper size for sorting the nodes 
+		sizeOfList = Size();
+		dataArray = new T[sizeOfList];
+		temp = m_pCollectionListHead;
 		// Fill array with node data 
 		while (temp != nullptr)
 		{
@@ -80,10 +74,11 @@ void Collection<T>::Add( T newFile)
 			i++;
 		}
 		
-		bubbleSort(dataArray, m_listSize);
-		// Insert data into list in sorted order
+		// Sort from smallest to greatest
+		bubbleSort(dataArray, sizeOfList);
+		// Insert data back into list, in sorted order
 		i = 0;
-		temp = m_pHead;
+		temp = m_pCollectionListHead;
 		while (temp != nullptr)
 		{
 			temp->SetData(dataArray[i]);
@@ -98,7 +93,7 @@ template<class T>
 int Collection<T>::Size()
 {
 	int retVal = 0;
-	TNode<T>* temp = m_pHead;
+	TNode<T>* temp = m_pCollectionListHead;
 
 	while (temp != nullptr)
 	{

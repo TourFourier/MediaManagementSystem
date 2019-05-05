@@ -5,6 +5,8 @@
 #include "TNode.h"
 #include "Iterator.h"
 #include "Collection.h"
+#include "MySongs.h"
+
 using std::ostream;
 using std::cout;
 using std::endl;
@@ -60,51 +62,26 @@ int main()
 		{
 			cout << "No more elements!" << endl;
 		}
-		return 0;
-	
-	
-	
-	//Collection<int> co;
-	//Iterator<int> it = co.GetIterator();
-	//int* i = new int(7);
-	//TNode<int>* n = new TNode<int>(i);
-	/*co.Add(7);
-	co.Add(8);
-	co.Add(3);
-	co.Add(9);
-	co.Add(2);
-	co.Add(2);
-	co.Add(4);
-	co.Add(15);*/
 
-	/*co.printList();
-
-	cout << it.HasNext() << endl;
-
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-
-	cout << it.HasNext() << endl;
-
-
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	/*cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-	cout << it.Next() << endl;
-
-	cout << it.HasNext() << endl;*/
-
-
-
-
-	//cout<<co.Size()<<endl;
-	//cout<<(ll.GetNode(to_string(11))->GetData());
+		/*	MySongs mySongs;
+			mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
+			mySongs.AddFolder("Hebrew");
+			mySongs.AddFolder("old", "Hebrew");
+			mySongs.AddFolder("new", "Hebrew");
+			mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "old");
+			mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
+			mySongs.PrintSongs();
+			mySongs.Play("MATAM EX4");
+			mySongs.MoveSong("MATAM EX4", "Hebrew");
+			mySongs.PrintFolderSongs("Hebrew");
+			mySongs.MoveSong("MATAM EX4", "new", "Hebrew");
+			mySongs.Play("MATAM EX4", "Hebrew"); // This will fail!
+			mySongs.PrintSongs("Shlomo"); // Will print nothing.
+			mySongs.PrintFolderSongs("new", "Prison 6");
+			mySongs.RemoveSong("Road of the King"); // This will fail!
+			mySongs.RemoveSong("Road of the King", "old");
+			mySongs.RemoveFolder("old");
+		*/
+			return 0;
 }
 

@@ -9,11 +9,12 @@ class Iterator
 private:
 	bool haventStarted = true;
 	bool calledNext = false;// Used for check when calling Remove()
-	bool afterRemoveCalled = false;
+	bool removeNodeCalled = false;
 	TNode<T>* m_pPrevious = nullptr;
 	TNode<T>* m_pCurrent = nullptr;
+	//T& GetItem(const char* itemName);
 public:
-	// Will point to pointer to (first node of) list in Collection object
+	// Will point to member pointer to (first node of) list in Collection object
 	TNode<T>** m_pBegin = nullptr;
 
 	Iterator() {}
@@ -24,6 +25,17 @@ public:
 	void Remove();
 };
 
+/*template<class T>
+T& Iterator<T>::GetItem(const char* itemName)
+{
+	T* retVal = new T;
+	while (this->HasNext())
+	{
+		if ()
+	}
+
+
+}*/
 
 
 template<class T>
@@ -35,30 +47,31 @@ T& Iterator<T>::Next()
 	// Haven't started traversing list and the list is not empty
 	if (haventStarted  &&  *m_pBegin != nullptr)
 	{
-		// Retrieve the value of the first node and save it in retVal
+		// Point to first node and retrieve the value and save it in retVal
 		m_pCurrent = *m_pBegin;
 		*retVal = m_pCurrent->GetData();
 		//m_pPrevious = *m_pBegin;
 		haventStarted = false;
 		calledNext = true;
 	}
-	else if (!haventStarted  &&  m_pCurrent->GetNext() != nullptr  &&  !afterRemoveCalled)// Have started, but haven't reached the end
+	// Have started, but haven't reached the end; move to next node and retreive value
+	else if (!haventStarted  &&  m_pCurrent->GetNext() != nullptr  &&  !removeNodeCalled)
 	{
 		m_pPrevious = m_pCurrent;
 		m_pCurrent = m_pCurrent->GetNext();
 		*retVal = m_pCurrent->GetData();
 		calledNext = true;
 	}
-	else if (afterRemoveCalled  &&  m_pCurrent != nullptr)// dont need to check if started because Remove() can only come after call to Next()
+	// Dont need to check if started because Remove() can only come after call to Next()
+	else if (m_pCurrent != nullptr  &&  removeNodeCalled)
 	{
-		// Get current value and then move current to next node
+		// Get current nodes value but keep current pointer on this node (b/c every call to next first shifts the pointer)
 		*retVal = m_pCurrent->GetData();
-		//m_pPrevious = m_pCurrent;
-		//m_pCurrent = m_pCurrent->GetNext();
 		calledNext = true;
-		afterRemoveCalled = false;
+		removeNodeCalled = false;
 	}
-	else// Either the list is empty or have reached the end <<<<<< consider having it loop from beginning
+	else// Either the list is empty or have reached the end 
+		//<<<<<< consider having it loop to beginning, but would need to fix HasNext() to recognize that
 	{
 		 *retVal = static_cast<T>(0);
 		 calledNext = false;
@@ -69,19 +82,19 @@ T& Iterator<T>::Next()
 template<class T>
 bool Iterator<T>::HasNext()
 {
-	// Haven't started traversing list, but there are nodes in list 
+	// Haven't started traversing list, and there are nodes in list 
 	if (haventStarted  &&  *m_pBegin != nullptr)  
 	{
 		return true;
 	}
-	// Have started and not at end and not after a call to Remove()
-	if ((!haventStarted  &&  m_pCurrent != nullptr)  &&  (!haventStarted  &&  m_pCurrent->GetNext() != nullptr)  &&  !afterRemoveCalled)
+	// Have started and not at end and not following a call to Remove()
+	if ((!haventStarted  &&  m_pCurrent != nullptr)  &&  (!haventStarted  &&  m_pCurrent->GetNext() != nullptr)  &&  !removeNodeCalled)
 	{
 		return true;
 	}
 
-	// Have started and are possibly at end but after a call to Remove()
-	if ((!haventStarted  &&  m_pCurrent != nullptr) && afterRemoveCalled)
+	// Have started and are possibly at end but are following a call to Remove()
+	if ((!haventStarted  &&  m_pCurrent != nullptr) && removeNodeCalled)
 	{
 		return true;
 	}
@@ -108,6 +121,6 @@ void Iterator<T>::Remove()
 			*m_pBegin = m_pCurrent;
 		}
 		calledNext = false;
-		afterRemoveCalled = true;
+		removeNodeCalled = true;
 	}
 }
