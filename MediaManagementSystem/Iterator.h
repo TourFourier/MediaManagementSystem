@@ -102,6 +102,7 @@ bool Iterator<T>::HasNext()
 	return false;
 }
 
+// Deletes current node
 template<class T>
 void Iterator<T>::Remove()
 {

@@ -19,10 +19,10 @@ public:
 	Collection<Song> GetSongCollection() { return m_collectionSongs; }
 
 
-	bool AddFolder(const char* folderName, const char* superFolder);
-	bool AddSong(string title, const char* artist, const char* lyrics, const char* folder);
-	bool RemoveSong(const char* title);
-	bool RemoveFolder(const char* folderName);
+	bool AddFolder(const char* folderName, const char* superFolder="");
+	bool AddSong(string title, const char* artist, const char* lyrics, const char* folder="");
+	bool RemoveSong(string title, const char* folderName = "");
+	bool RemoveFolder(const char* folderName, const char* superFolder="");
 	bool MoveSong(const char* tiltle, const char* destinationFolderName);
 	bool Play(const char* title);
 	bool PrintSongs();
