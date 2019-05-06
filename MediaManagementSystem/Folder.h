@@ -18,10 +18,9 @@ public:
 
 	//Folder* GetFolder(const char* folderName);
 	bool SongExists(const string title);
-	bool FolderExists(const char* folderName); 
+	Folder* FolderExists(const char* folderName); 
 	void CreateSubFolder(const char* folderName);
 
 	bool operator>(const Folder& f);
-
 };
 

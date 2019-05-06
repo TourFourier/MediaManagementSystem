@@ -47,29 +47,39 @@ bool Folder::SongExists(const string title)
 	return false;
 }
 
-bool Folder::FolderExists(const char* folderName)
+Folder* Folder::FolderExists(const char* folderName)
 {
+	Folder* retVal = nullptr;
 	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
 	while (i_collectionFolders.HasNext())
 	{
-		if (i_collectionFolders.Next().GetFolderName() == folderName)
+		retVal = &(i_collectionFolders.Next());
+		if (retVal->GetFolderName() == folderName)
+		{
+			return retVal;
+		}
+
+		retVal = retVal->FolderExists(folderName);
+		if (retVal != nullptr)
+		{
+			return retVal;
+		}
+		retVal = nullptr;
+	}
+	return retVal;
+}
+
+	
+	void Folder::CreateSubFolder(const char* folderName)
+	{
+		this->GetFolderCollection().Add(*(new Folder(folderName)));
+	}
+
+	bool Folder::operator >(const Folder& f)
+	{
+		if (m_sFolderName > f.m_sFolderName)
 		{
 			return true;
 		}
+		return false;
 	}
-	return false;
-}
-
-void Folder::CreateSubFolder(const char* folderName)
-{
-	this->GetFolderCollection().Add(*(new Folder(folderName)));
-}
-
-bool Folder::operator >(const Folder& f)
-{
-	if (m_sFolderName > f.m_sFolderName)
-	{
-		return true;
-	}
-	return false;
-}

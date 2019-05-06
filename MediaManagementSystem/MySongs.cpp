@@ -40,7 +40,7 @@ MySongs::~MySongs()
 }*/
 
 // Returns nullptr if folder doesn't exist otherwise returns a pointer to the folder obj.
-Folder* MySongs::FolderExists(const char* folderName)
+Folder* MySongs::FolderExistsRecursive(const char* folderName)
 {
 	Folder* retVal = nullptr;
 	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
@@ -48,6 +48,11 @@ Folder* MySongs::FolderExists(const char* folderName)
 	{
 		retVal = &(i_collectionFolders.Next());
 		if (retVal->GetFolderName() == folderName)
+		{
+			return retVal;
+		}
+		retVal = retVal->FolderExists(folderName);
+		if (retVal != nullptr)
 		{
 			return retVal;
 		}
