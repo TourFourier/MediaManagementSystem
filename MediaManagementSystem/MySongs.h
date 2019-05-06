@@ -23,7 +23,7 @@ public:
 	bool AddSong(string title, const char* artist, const char* lyrics, const char* folder="");
 	bool RemoveSong(string title, const char* folderName = "");
 	bool RemoveFolder(const char* folderName, const char* superFolder="");
-	bool MoveSong(const char* tiltle, const char* destinationFolderName);
+	bool MoveSong(string title, const char* destinationFolder, const char* sourceFolder="");
 	bool Play(const char* title);
 	bool PrintSongs();
 	bool PrintFolderSongs(const char* folderName);

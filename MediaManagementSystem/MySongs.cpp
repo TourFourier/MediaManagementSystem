@@ -269,9 +269,31 @@ bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 	
 
 
-bool MySongs::MoveSong(const char* tiltle, const char* destinationFolderName)
+bool MySongs::MoveSong( string title, const char* destinationFolder, const char* sourceFolder)
 {
-	return true;
+	// what do i have to do...move the node or just move the song obj. and delete the node
+    //>It is clear that since i am just given the title and not the rest of the song obj, it is clear i must move the obj itself to the new folder 
+	//2)find if song exists...if no source:search mysong.m_collectionSongs and get point
+	//1)find if destination folder exists - recursively?? 
+
+	transform(title.begin(), title.end(), title.begin(), ::tolower);
+	//TODO: revert the returned int results back to a string
+	Song temp;
+	Song* existingSong;
+	Folder* existingFolder;
+	// Song is not in an existing directory
+	if (sourceFolder == "")
+	{
+		// no song exists with this name in this destination
+		if ((existingSong = SongExists(title)) == nullptr)
+		{
+			return false;
+		}
+		else// a song exists with this name in this destination
+		{
+			
+		}
+	}
 }
 
 
