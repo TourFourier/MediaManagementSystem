@@ -17,7 +17,7 @@ using std::string;
 int main()
 {
 	
-	
+	/*
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
 		stringCollection.Add("World");
@@ -64,13 +64,26 @@ int main()
 		{
 			cout << "No more elements!" << endl;
 		}
-
-		/*	MySongs mySongs;
-			mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
+	*/
+			MySongs mySongs;
+			//mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
 			mySongs.AddFolder("Hebrew");
+			//mySongs.AddFolder("two");
+			//mySongs.AddFolder("three");
+
 			mySongs.AddFolder("old", "Hebrew");
-			mySongs.AddFolder("new", "Hebrew");
-			mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "old");
+			//mySongs.AddFolder("new", "Hebrew"); 
+
+			Iterator<Folder> itr2 = mySongs.GetFolderCollection().GetIterator();
+			//while (itr2.HasNext())
+			//{
+			Folder f = itr2.Next();
+				cout << f.GetFolderName() << endl;
+				Folder g = f.GetFolderCollection().GetIterator().Next();
+				cout << g.GetFolderName() << endl;
+
+			//}
+		/*	mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "old");
 			mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
 			mySongs.PrintSongs();
 			mySongs.Play("MATAM EX4");

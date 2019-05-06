@@ -9,6 +9,7 @@ class MySongs
 	Collection<Song> m_collectionSongs;
 	//Folder* GetFolder(const char* folderName);
 	Song* SongExists(string title);
+	Folder* FolderExists(const char* folderName);
 	Folder* FolderExistsRecursive(const char* folderName);
 	bool CreatedSubFolder(const char* subFolder, Folder* superFolder);
 public:

@@ -11,13 +11,6 @@ private:
 	Iterator<T> m_collectionIterator;
 	void bubbleSort(T arr[], int n);
 	void swap(T *xp, T *yp);
-
-		/*static T& Next(Collection<T>* pThis) 
-		{
-			T retVal = pThis->m_pCollectionListHead->GetData();
-			pThis->m_pCollectionListHead = pThis->m_pCollectionListHead->GetNext();
-			return retVal;
-		}*/
 public:
 	Collection()
 	{
@@ -26,13 +19,13 @@ public:
 	//Alternative way to give iterator acess to list: friend class Iterator<T>;
 	~Collection() {} // TODO: ADD DELETE IN DESTRUCTOR TO m_pCollectionListHead TO DELETE THE LIST AND FREE THE HEAP??
 
-	void Add( T newFile);
+	void Add( T& newFile);
 	int Size();
-	Iterator<T> GetIterator() 
+	Iterator<T>& GetIterator() 
 	{
 		// Null Iterator's m_pCurrent pointer, so that Iterator's Next() method gives access to the first element in  the list
-		//m_collectionIterator.m_pCurrent = nullptr;
-		//m_collectionIterator.m_pPrevious = nullptr;
+		m_collectionIterator.m_pCurrent = nullptr;
+		m_collectionIterator.m_pPrevious = nullptr;
 
 		return m_collectionIterator; 
 	}
@@ -42,21 +35,21 @@ public:
 
 
 template<class T>
-void Collection<T>::Add( T newFile) 
+void Collection<T>::Add( T& newFile) // changed T to T&
 {
 	// If list is empty, asign node as head/first node
 	if (m_pCollectionListHead == nullptr) 
 	{
 		m_pCollectionListHead = new TNode<T>(newFile);
 	}
-	else // Add new node to list at head and sort the list
+	else // Add new node to list at head and then sort the list
 	{
 		int i = 0;
 		int sizeOfList;
 		T* dataArray;
 		TNode<T>* temp;
 
-		// Adding new node
+		// Adding new node to head of list
 		TNode<T>* newNode = new TNode<T>(newFile);
 		newNode->SetNext(m_pCollectionListHead);
 		// Reset head pointer
@@ -81,7 +74,7 @@ void Collection<T>::Add( T newFile)
 		temp = m_pCollectionListHead;
 		while (temp != nullptr)
 		{
-			temp->SetData(dataArray[i]);
+			temp->SetData(dataArray[i]);// not so efficient because we are copying data--if it is big objects it could be costly
 			temp = temp->GetNext();
 			i++;
 		}

@@ -58,8 +58,24 @@ Folder* Folder::FolderExists(const char* folderName)
 		{
 			return retVal;
 		}
+		retVal = nullptr;
+	}
+	return retVal;
+}
 
-		retVal = retVal->FolderExists(folderName);
+Folder* Folder::FolderExistsRecursive(const char* folderName)
+{
+	Folder* retVal = nullptr;
+	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	while (i_collectionFolders.HasNext())
+	{
+		retVal = &(i_collectionFolders.Next());
+		if (retVal->GetFolderName() == folderName)
+		{
+			return retVal;
+		}
+
+		retVal = retVal->FolderExistsRecursive(folderName);
 		if (retVal != nullptr)
 		{
 			return retVal;
@@ -72,7 +88,7 @@ Folder* Folder::FolderExists(const char* folderName)
 	
 	void Folder::CreateSubFolder(const char* folderName)
 	{
-		this->GetFolderCollection().Add(*(new Folder(folderName)));
+		this->m_collectionFolders.Add(*(new Folder(folderName)));
 	}
 
 	bool Folder::operator >(const Folder& f)

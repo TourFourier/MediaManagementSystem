@@ -39,6 +39,22 @@ MySongs::~MySongs()
 
 }*/
 
+Folder* MySongs::FolderExists(const char* folderName)
+{
+	Folder* retVal = nullptr;
+	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	while (i_collectionFolders.HasNext())
+	{
+		retVal = &(i_collectionFolders.Next());
+		if (retVal->GetFolderName() == folderName)
+		{
+			return retVal;
+		}
+		retVal = nullptr;
+	}
+	return retVal;
+}
+
 // Returns nullptr if folder doesn't exist otherwise returns a pointer to the folder obj.
 Folder* MySongs::FolderExistsRecursive(const char* folderName)
 {
@@ -51,7 +67,7 @@ Folder* MySongs::FolderExistsRecursive(const char* folderName)
 		{
 			return retVal;
 		}
-		retVal = retVal->FolderExists(folderName);
+		retVal = retVal->FolderExistsRecursive(folderName);
 		if (retVal != nullptr)
 		{
 			return retVal;
@@ -100,7 +116,7 @@ bool MySongs::AddFolder(const char* folderName, const char* superFolder)
 	if (superFolder == "")
 	{
 		// no directory exist with this name therefor create directory
-		if ((existingFolder = FolderExists(folderName)) == nullptr)
+		if ((existingFolder = this->FolderExists(folderName)) == nullptr)
 		{
 			m_collectionFolders.Add(*(new Folder(folderName)));
 			return true;
@@ -115,10 +131,10 @@ bool MySongs::AddFolder(const char* folderName, const char* superFolder)
 	else
 	{
 		// Check if the directory exists before trying to create a folder in it
-		if ((existingFolder = this->FolderExists(superFolder)) != nullptr)
+		if ((existingFolder = this->FolderExistsRecursive(superFolder)) != nullptr)
 		{
 			// Check if directory contains a folder with given name
-			if (existingFolder->FolderExists(folderName))// subfolder with given name exists
+			if (existingFolder->FolderExists(folderName) != nullptr)// subfolder with given name exists
 			{
 				return false;
 			}

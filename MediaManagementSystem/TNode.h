@@ -11,9 +11,9 @@ public:
 	TNode(T rData) {m_tData = rData;}
 	~TNode() {};
 
-	//friend class Iterator<T>;
+	//friend class Iterator<T>;  
 
-	T GetData() { return m_tData; }
+	T& GetData() { return m_tData; }
 	TNode<T>* GetNext() { return m_pNext; }
 
 	void SetData(T pData) { m_tData = pData; };
