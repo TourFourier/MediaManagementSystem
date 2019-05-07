@@ -1,9 +1,11 @@
 #include "pch.h"
 #include <string>
+#include <iostream>
 #include "Collection.h"
 #include "Song.h"
 #include "Folder.h"
 
+using std::cout;
 using std::string;
 
 Folder::Folder(const string folderName) :
@@ -88,6 +90,28 @@ Folder* Folder::FolderExistsRecursive(const char* folderName)
 		retVal = nullptr;
 	}
 	return retVal;
+}
+
+void Folder::PrintSongCollection(const char* artist)
+{
+	Song currentSong;
+	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
+	while (i_collectionSongs.HasNext())
+	{
+		if (artist == "")// All songs
+		{
+			i_collectionSongs.Next().PrintSongTitle();
+		}
+		else// Songs of a particular artist
+		{
+			currentSong = i_collectionSongs.Next();
+			if (currentSong.GetArtist() == artist)
+			{
+				currentSong.PrintSongTitle();
+
+			}
+		}
+	}
 }
 
 	

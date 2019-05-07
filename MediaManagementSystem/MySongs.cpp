@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <algorithm>
 #include <string> 
+#include <iostream>
 #include "TNode.h"
 #include "Iterator.h"
 #include "Collection.h"
@@ -8,6 +9,8 @@
 #include "Folder.h"
 #include "MySongs.h"
 
+using std::cout;
+using std::endl;
 using std::string;
 using std::transform;
 
@@ -151,7 +154,8 @@ bool MySongs::AddFolder(const char* folderName, const char* superFolder)
 }
 
 // TODO: ADD CHECK FOR EMPTY STRINGS AND NULL POINTERS
-bool MySongs::AddSong(string title, const char* artist, const char* lyrics, const char* folder)
+bool MySongs::AddSong(
+	string title, const char* artist, const char* lyrics, const char* folder)
 {
 	Song* existingSong;
 	Folder* existingFolder;
@@ -191,7 +195,6 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 		return false;
 	}
 }
-
 
 bool MySongs::RemoveSong(string title, const char* folderName)
 {
@@ -284,9 +287,6 @@ bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 	}
 }
 
-	
-
-
 bool MySongs::MoveSong( string title, const char* destinationFolderName, const char* sourceFolderName)
 {
 	Song songToMove;
@@ -348,19 +348,84 @@ bool MySongs::MoveSong( string title, const char* destinationFolderName, const c
 }
 
 
-bool MySongs::Play(const char* title)
+bool MySongs::Play(const char* title, const char* folderName)
 {
+	Song* songToPlay;
+	Folder* songsFolder = FolderExistsRecursive(folderName);
+	// Check if folder(s) and song exist(s). If not return false
+	if (folderName == "")// No source folder was provided
+	{
+		if ((songToPlay = this->SongExists(title)) == nullptr)
+		{
+			return false;
+		}
+		else
+		{
+			songToPlay->PrintSongLyrics();
+			cout << endl;
+		}
+	}
+	else
+	{
+		if (songsFolder == nullptr  || (songToPlay = songsFolder->SongExists(title)) == nullptr)
+		{
+			return false;
+		}
+		else
+		{
+			songToPlay->PrintSongLyrics();
+			cout << endl;
+		}
+	}
 	return true;
 }
 
 bool MySongs::PrintSongs()
 {
+	//// Get iterator for songCollection in particular folder,and iterate over songs(nodes) and cout GetLowerCaseTitle()
 	// Get iterator and iterate over songs and cout the GetData().m_sTitle;
 	return true;
 }
 
-bool MySongs::PrintFolderSongs(const char* folderName)
+bool MySongs::PrintFolderSongs(const char* folderName, const char* artist)
 {
-	//// Get iterator for songCollection in particular folder,and iterate over songs(nodes) and cout GetLowerCaseTitle()
+	Folder* folderToPrint = FolderExistsRecursive(folderName);
+	Iterator<Song> i_collectionSongs;
+	Song currentSong;
+
+	// Folder doesn't exist
+	if (folderToPrint == nullptr)
+	{
+		return false;
+	}
+
+	// Print root song collection
+	if (folderName == "")
+	{
+		i_collectionSongs = m_collectionSongs.GetIterator();
+		while (i_collectionSongs.HasNext())
+		{
+			if (artist == "")// All songs
+			{
+				i_collectionSongs.Next().PrintSongTitle();
+				cout << endl;
+			}
+			else// Songs of a particular artist
+			{
+				currentSong = i_collectionSongs.Next();
+				if (currentSong.GetArtist() == artist)
+				{
+					currentSong.PrintSongTitle();
+					cout << endl;
+
+				}
+			}
+		}
+	}
+	else// Print songs of a selected folder
+	{
+		folderToPrint->PrintSongCollection(artist);
+	}
+	
 	return true;
 }
