@@ -16,7 +16,7 @@ using std::string;
 
 int main()
 {
-	
+
 	/*
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
@@ -34,9 +34,9 @@ int main()
 			if (s == "Hello")
 			{
 				cout << s << endl;
-			}		
+			}
 			else
-		    {
+			{
 				itr.Remove();
 			}
 		}
@@ -65,50 +65,25 @@ int main()
 			cout << "No more elements!" << endl;
 		}
 	*/
-			MySongs mySongs;
-			//mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
-			mySongs.AddFolder("Hebrew");
-			mySongs.AddFolder("old", "Hebrew");
-			//mySongs.AddFolder("new", "Hebrew"); 
-
-
-			mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "Hebrew");
-			mySongs.PrintFolderSongs("Hebrew");
-			mySongs.AddSong("queen", "bill", "Road of the queen is my ...");
-			mySongs.PrintFolderSongs();
-
-/*
-			Collection<Folder> superf = mySongs.GetFolderCollection();
-			Iterator<Folder> isuperf = superf.GetIterator();
-			//while (itr2.HasNext())
-			//{
-			//Folder f = itr2.Next();// the GetIterator() is returning an iterator that does not point to Folders first node rather null
-			Folder& f = isuperf.Next();
-			Collection<Folder> cf = f.GetFolderCollection();
-			Iterator<Folder> icf = cf.GetIterator();
-			Folder& subf = icf.Next();
-			string subfName = subf.GetFolderName();
-
-			cout << subfName;
-*/
-				//Folder g = f.GetFolderCollection().GetIterator().Next();
-				//cout << g.GetFolderName() << endl;
-
-			//}
-		/*	mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "old");
-			mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
-			mySongs.PrintSongs();
-			mySongs.Play("MATAM EX4");
-			mySongs.MoveSong("MATAM EX4", "Hebrew");
-			mySongs.PrintFolderSongs("Hebrew");
-			mySongs.MoveSong("MATAM EX4", "new", "Hebrew");
-			mySongs.Play("MATAM EX4", "Hebrew"); // This will fail!
-			mySongs.PrintSongs("Shlomo"); // Will print nothing.
-			mySongs.PrintFolderSongs("new", "Prison 6");
-			mySongs.RemoveSong("Road of the King"); // This will fail!
-			mySongs.RemoveSong("Road of the King", "old");
-			mySongs.RemoveFolder("old");
-		*/
-			return 0;
+	MySongs mySongs;
+	mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
+	mySongs.AddFolder("Hebrew");
+	mySongs.AddFolder("old", "Hebrew");
+	mySongs.AddFolder("new", "Hebrew");
+	mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "old");
+	mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
+	mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
+	mySongs.PrintSongs();
+	//>>>>>mySongs.Play("MATAM EX4");
+	//>>>>>mySongs.MoveSong("MATAM EX4", "Hebrew");
+	//>>>>>mySongs.PrintFolderSongs("Hebrew");...
+	mySongs.MoveSong("MATAM EX4", "new", "Hebrew");
+	/*.Play("MATAM EX4", "Hebrew"); // This will fail!
+	mySongs.PrintSongs("Shlomo"); // Will print nothing.
+	mySongs.PrintFolderSongs("new", "Prison 6");
+	mySongs.RemoveSong("Road of the King"); // This will fail!
+	mySongs.RemoveSong("Road of the King", "old");
+	mySongs.RemoveFolder("old");*/
+	return 0;
 }
 

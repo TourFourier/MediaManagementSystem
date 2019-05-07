@@ -165,6 +165,7 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 		if ((existingSong = SongExists(title)) == nullptr)
 		{
 			m_collectionSongs.Add(*(new Song(title, artist, lyrics)));
+			m_nTotalNumOfSongs++;
 			return true;
 		}
 		// A directory exists with this name, therefor if directory doesn't contain an identical subfolder, create new folder in that directory, else return false
@@ -183,6 +184,7 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 			if ((existingFolder->SongExists(title)) == nullptr)// song with given name does not exist therefor add new song and return true
 			{
 				existingFolder->GetSongCollection().Add(*(new Song(title, artist, lyrics)));
+				m_nTotalNumOfSongs++;
 				return true;
 			}
 			else // song with given name exists
@@ -197,10 +199,6 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 
 bool MySongs::RemoveSong(string title, const char* folderName)
 {
-	transform(title.begin(), title.end(), title.begin(), ::tolower);
-
-	//TODO: revert the returned int results back to a string
-
 	Song* existingSong;
 	Folder* existingFolder;
 	// Song to remove is not in a directory
@@ -215,6 +213,7 @@ bool MySongs::RemoveSong(string title, const char* folderName)
 				if (i_collectionSongs.Next().GetTitle() == title)
 				{
 					i_collectionSongs.Remove();
+					m_nTotalNumOfSongs--;
 					return true;
 				}
 			}
@@ -234,6 +233,7 @@ bool MySongs::RemoveSong(string title, const char* folderName)
 				if (i_collectionSongs.Next().GetTitle() == title)
 				{
 					i_collectionSongs.Remove();
+					m_nTotalNumOfSongs--;
 					return true;
 				}
 			}
@@ -344,6 +344,8 @@ bool MySongs::MoveSong( string title, const char* destinationFolderName, const c
 
 	// Create new node in destination folder and add song to it
 	destinationFolder->GetSongCollection().Add(songToMove);
+
+	return true;
 }
 
 
@@ -376,13 +378,6 @@ bool MySongs::Play(const char* title, const char* folderName)
 			cout << endl;
 		}
 	}
-	return true;
-}
-
-bool MySongs::PrintSongs()
-{
-	//// Get iterator for songCollection in particular folder,and iterate over songs(nodes) and cout GetLowerCaseTitle()
-	// Get iterator and iterate over songs and cout the GetData().m_sTitle;
 	return true;
 }
 
@@ -427,4 +422,112 @@ bool MySongs::PrintFolderSongs(const char* folderName, const char* artist)
 	}
 	
 	return true;
+}
+
+
+
+bool MySongs::PrintSongs(const char* artist)
+{
+	int i;
+	string* titleArray = new string[m_nTotalNumOfSongs];
+
+	// Print all songs regardless of artists
+	if (artist == "")
+	{
+		int numOfSongs = SongTitleRec(titleArray);
+		bubbleSortCaseIns(titleArray, numOfSongs);
+		for (i = 0; i < numOfSongs; i++)
+		{
+			cout << titleArray[i] << endl;
+		}
+	}
+	else // Print only songs of particular artist
+	{
+		int numOfSongs = SongTitleArtistRec(titleArray, artist);
+		bubbleSortCaseIns(titleArray, numOfSongs);
+		//add check for if array is empty ie. no songs of this artist:  if (titleArray[0] != "").. then print
+		for (i = 0; i < numOfSongs; i++)
+		{
+			cout << titleArray[i] << endl;
+		}
+	}
+	return true;
+}
+
+
+
+
+void MySongs::swap(string *xp, string *yp)
+{
+	string temp = *xp;
+	*xp = *yp;
+	*yp = temp;
+}
+
+// An optimized version of Bubble Sort 
+void  MySongs::bubbleSortCaseIns(string arr[], int n)
+{
+	int i, j;
+	bool swapped;
+	string tempJ, tempJPlusOne;
+
+	for (i = 0; i < n - 1; i++)
+	{
+		swapped = false;
+		for (j = 0; j < n - i - 1; j++)
+		{
+			tempJ = arr[j];
+			transform(tempJ.begin(), tempJ.end(), tempJ.begin(), ::tolower);
+			tempJPlusOne = arr[j + 1];
+			transform(tempJPlusOne.begin(), tempJPlusOne.end(), tempJPlusOne.begin(), ::tolower);
+
+			if (tempJ > tempJPlusOne)
+			{
+				swap(&arr[j], &arr[j + 1]);
+				swapped = true;
+			}
+		}
+
+		// IF no two elements were swapped by inner loop, then break 
+		if (swapped == false)
+			break;
+	}
+}
+
+
+
+
+int MySongs::SongTitleRec(string* titles, int index)
+{
+	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
+	while (i_collectionSongs.HasNext())
+	{
+		titles[index] = i_collectionSongs.Next().GetTitle();
+		index++;
+	}
+	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	while (i_collectionFolders.HasNext())
+	{
+		index = SongTitleRec(titles, index);
+	}
+	return index;
+}
+
+int MySongs::SongTitleArtistRec(string* titles, const char* artist, int index)
+{
+	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
+	while (i_collectionSongs.HasNext())
+	{
+		if (i_collectionSongs.Next().GetArtist() == artist)
+		{
+			titles[index] = i_collectionSongs.m_pCurrent->GetData().GetTitle();
+			index++;
+		}
+	}
+	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	while (i_collectionFolders.HasNext())
+	{
+		index = SongTitleArtistRec(titles, artist, index);
+	}
+	return index;
 }
