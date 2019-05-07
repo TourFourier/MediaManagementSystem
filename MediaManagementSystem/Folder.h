@@ -21,6 +21,7 @@ public:
 	Folder* FolderExists(const char* folderName);
 	Folder* FolderExistsRecursive(const char* folderName);
 	void CreateSubFolder(const char* folderName);
+	void PrintSongCollection(const char* artist);
 
 	bool operator>(const Folder& f);
 };

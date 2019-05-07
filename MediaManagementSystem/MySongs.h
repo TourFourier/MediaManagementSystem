@@ -25,8 +25,8 @@ public:
 	bool RemoveSong(string title, const char* folderName = "");
 	bool RemoveFolder(const char* folderName, const char* superFolder="");
 	bool MoveSong(string title, const char* destinationFolder, const char* sourceFolder="");
-	bool Play(const char* title);
+	bool Play(const char* title, const char* folderName);
 	bool PrintSongs();
-	bool PrintFolderSongs(const char* folderName);
+	bool PrintFolderSongs(const char* folderName="", const char* artist="");
 };
 

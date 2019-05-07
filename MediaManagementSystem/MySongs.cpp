@@ -1,6 +1,7 @@
 #include "pch.h"
 #include <algorithm>
 #include <string> 
+#include <iostream>
 #include "TNode.h"
 #include "Iterator.h"
 #include "Collection.h"
@@ -8,6 +9,8 @@
 #include "Folder.h"
 #include "MySongs.h"
 
+using std::cout;
+using std::endl;
 using std::string;
 using std::transform;
 
@@ -177,7 +180,7 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 		if ((existingFolder = this->FolderExistsRecursive(folder)) != nullptr)
 		{
 			// Check if directory contains a song with given name
-			if (!(existingFolder->SongExists(title)))// song with given name does not exist therefor add new song and return true
+			if ((existingFolder->SongExists(title)) == nullptr)// song with given name does not exist therefor add new song and return true
 			{
 				existingFolder->GetSongCollection().Add(*(new Song(title, artist, lyrics)));
 				return true;
@@ -191,7 +194,6 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 		return false;
 	}
 }
-
 
 bool MySongs::RemoveSong(string title, const char* folderName)
 {
@@ -224,7 +226,7 @@ bool MySongs::RemoveSong(string title, const char* folderName)
 	else
 	{
 		// If the folder exists and contains a song with given name
-		if ((existingFolder = this->FolderExistsRecursive(folderName)) != nullptr && (existingFolder->SongExists(title)))
+		if ((existingFolder = this->FolderExistsRecursive(folderName)) != nullptr && (existingFolder->SongExists(title)) != nullptr)
 		{
 			Iterator<Song> i_collectionSongs = existingFolder->GetSongCollection().GetIterator();
 			while (i_collectionSongs.HasNext())
@@ -267,7 +269,7 @@ bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 	else
 	{
 		// If the outer folder exists and contains a folder with given name
-		if ((existingFolder = this->FolderExists(superFolder)) != nullptr && (existingFolder->FolderExists(folderName)))
+		if ((existingFolder = this->FolderExistsRecursive(superFolder)) != nullptr && (existingFolder->FolderExists(folderName)) != nullptr)
 		{
 			Iterator<Folder> i_collectionFolder = existingFolder->GetFolderCollection().GetIterator();
 			while (i_collectionFolder.HasNext())
@@ -284,50 +286,145 @@ bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 	}
 }
 
-	
-
-
-bool MySongs::MoveSong( string title, const char* destinationFolder, const char* sourceFolder)
+bool MySongs::MoveSong( string title, const char* destinationFolderName, const char* sourceFolderName)
 {
-	// what do i have to do...move the node or just move the song obj. and delete the node
-    //>It is clear that since i am just given the title and not the rest of the song obj, it is clear i must move the obj itself to the new folder 
-	//2)find if song exists...if no source:search mysong.m_collectionSongs and get point
-	//1)find if destination folder exists - recursively?? 
-
-	transform(title.begin(), title.end(), title.begin(), ::tolower);
-	//TODO: revert the returned int results back to a string
-	Song temp;
-	Song* existingSong;
-	Folder* existingFolder;
-	// Song is not in an existing directory
-	if (sourceFolder == "")
+	Song songToMove;
+	Song* ptrToSong;
+	Folder* sourceFolder = FolderExistsRecursive(sourceFolderName);
+	Folder* destinationFolder = FolderExistsRecursive(destinationFolderName);
+	
+	// Check if folder(s) and song exist(s). If yes, copy song objects fileds to songToMove and if not return false
+	if (sourceFolderName == "")// No source folder was provided
 	{
-		// no song exists with this name in this destination
-		if ((existingSong = SongExists(title)) == nullptr)
+		if (destinationFolder == nullptr  || (ptrToSong = SongExists(title)) == nullptr)
 		{
 			return false;
 		}
-		else// a song exists with this name in this destination
+		else 
 		{
-			
+			songToMove = *ptrToSong;
 		}
 	}
+	else // A source folder was provided
+	{
+		if (sourceFolder == nullptr || destinationFolder == nullptr  || (ptrToSong = sourceFolder->SongExists(title)) == nullptr)
+		{
+			return false;
+		}
+		else
+		{
+			songToMove = *ptrToSong;
+		}
+	}
+
+	// At this point we have verified existence of source and destination folders and song 
+	// Delete source node 
+	if (sourceFolderName == "")
+	{
+		Iterator<Song> itr = m_collectionSongs.GetIterator();
+		while (itr.HasNext())
+		{
+			if (itr.Next().GetTitle() == title)
+			{
+				itr.Remove();
+			}
+		}
+	}
+	else
+	{
+		Iterator<Song> itr = sourceFolder->GetSongCollection().GetIterator();
+		while (itr.HasNext())
+		{
+			if (itr.Next().GetTitle() == title)
+			{
+				itr.Remove();
+			}
+		}
+	}
+
+	// Create new node in destination folder and add song to it
+	destinationFolder->GetSongCollection().Add(songToMove);
 }
 
 
-bool MySongs::Play(const char* title)
+bool MySongs::Play(const char* title, const char* folderName)
 {
+	Song* songToPlay;
+	Folder* songsFolder = FolderExistsRecursive(folderName);
+	// Check if folder(s) and song exist(s). If not return false
+	if (folderName == "")// No source folder was provided
+	{
+		if ((songToPlay = this->SongExists(title)) == nullptr)
+		{
+			return false;
+		}
+		else
+		{
+			songToPlay->PrintSongLyrics();
+			cout << endl;
+		}
+	}
+	else
+	{
+		if (songsFolder == nullptr  || (songToPlay = songsFolder->SongExists(title)) == nullptr)
+		{
+			return false;
+		}
+		else
+		{
+			songToPlay->PrintSongLyrics();
+			cout << endl;
+		}
+	}
 	return true;
 }
 
 bool MySongs::PrintSongs()
 {
+	//// Get iterator for songCollection in particular folder,and iterate over songs(nodes) and cout GetLowerCaseTitle()
 	// Get iterator and iterate over songs and cout the GetData().m_sTitle;
 	return true;
 }
 
-bool MySongs::PrintFolderSongs(const char* folderName)
+bool MySongs::PrintFolderSongs(const char* folderName, const char* artist)
 {
-	//// Get iterator for songCollection in particular folder,and iterate over songs(nodes) and cout GetLowerCaseTitle()
+	Folder* folderToPrint = FolderExistsRecursive(folderName);
+	Iterator<Song> i_collectionSongs;
+	Song currentSong;
+
+	// Print root song collection
+	if (folderName == "")
+	{
+		i_collectionSongs = m_collectionSongs.GetIterator();
+		while (i_collectionSongs.HasNext())
+		{
+			if (artist == "")// All songs
+			{
+				i_collectionSongs.Next().PrintSongTitle();
+				cout << endl;
+			}
+			else// Songs of a particular artist
+			{
+				currentSong = i_collectionSongs.Next();
+				if (currentSong.GetArtist() == artist)
+				{
+					currentSong.PrintSongTitle();
+					cout << endl;
+
+				}
+			}
+		}
+	}
+	else// Print songs of a selected folder
+	{
+		// Folder doesn't exist
+		if (folderToPrint == nullptr)
+		{
+			return false;
+		}
+		// Folder exists
+		folderToPrint->PrintSongCollection(artist);
+	}
+	
 	return true;
 }

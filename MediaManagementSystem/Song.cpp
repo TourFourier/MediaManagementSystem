@@ -1,8 +1,10 @@
 #include "pch.h"
 #include <string>
+#include <iostream>
 #include<algorithm>
 #include "Song.h"
 
+using std::cout;
 using std::string;
 
 // ???????ADD CHECK FOR EMPTY STRINGS????????
@@ -18,6 +20,16 @@ Song::Song(string title, string artist, string lyrics):
 
 Song::~Song()
 {
+}
+
+void Song::PrintSongTitle()
+{
+	cout << this->m_sTitle;
+}
+
+void Song::PrintSongLyrics()
+{
+	cout << this->m_sLyrics;
 }
 
 

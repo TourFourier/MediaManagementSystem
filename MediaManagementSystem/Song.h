@@ -23,6 +23,9 @@ public:
 	void SetLyrics(const string lyrics) { m_sLyrics = lyrics; }
 	void SetLowerCaseTitle(const string lctitle) { m_lowerCaseTitle = lctitle; }
 
+	void PrintSongTitle();
+	void PrintSongLyrics();
+
 	bool operator >(const Song& s);
 
 };
