@@ -154,8 +154,7 @@ bool MySongs::AddFolder(const char* folderName, const char* superFolder)
 }
 
 // TODO: ADD CHECK FOR EMPTY STRINGS AND NULL POINTERS
-bool MySongs::AddSong(
-	string title, const char* artist, const char* lyrics, const char* folder)
+bool MySongs::AddSong(string title, const char* artist, const char* lyrics, const char* folder)
 {
 	Song* existingSong;
 	Folder* existingFolder;
@@ -393,12 +392,6 @@ bool MySongs::PrintFolderSongs(const char* folderName, const char* artist)
 	Iterator<Song> i_collectionSongs;
 	Song currentSong;
 
-	// Folder doesn't exist
-	if (folderToPrint == nullptr)
-	{
-		return false;
-	}
-
 	// Print root song collection
 	if (folderName == "")
 	{
@@ -424,6 +417,12 @@ bool MySongs::PrintFolderSongs(const char* folderName, const char* artist)
 	}
 	else// Print songs of a selected folder
 	{
+		// Folder doesn't exist
+		if (folderToPrint == nullptr)
+		{
+			return false;
+		}
+		// Folder exists
 		folderToPrint->PrintSongCollection(artist);
 	}
 	

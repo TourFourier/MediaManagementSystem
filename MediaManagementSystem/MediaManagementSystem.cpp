@@ -68,12 +68,16 @@ int main()
 			MySongs mySongs;
 			//mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
 			mySongs.AddFolder("Hebrew");
-			//mySongs.AddFolder("two");
-			//mySongs.AddFolder("three");
-
 			mySongs.AddFolder("old", "Hebrew");
 			//mySongs.AddFolder("new", "Hebrew"); 
 
+
+			mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "Hebrew");
+			mySongs.PrintFolderSongs("Hebrew");
+			mySongs.AddSong("queen", "bill", "Road of the queen is my ...");
+			mySongs.PrintFolderSongs();
+
+/*
 			Collection<Folder> superf = mySongs.GetFolderCollection();
 			Iterator<Folder> isuperf = superf.GetIterator();
 			//while (itr2.HasNext())
@@ -86,7 +90,7 @@ int main()
 			string subfName = subf.GetFolderName();
 
 			cout << subfName;
-
+*/
 				//Folder g = f.GetFolderCollection().GetIterator().Next();
 				//cout << g.GetFolderName() << endl;
 

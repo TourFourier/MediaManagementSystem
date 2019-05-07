@@ -95,7 +95,7 @@ Folder* Folder::FolderExistsRecursive(const char* folderName)
 void Folder::PrintSongCollection(const char* artist)
 {
 	Song currentSong;
-	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
+	Iterator<Song> i_collectionSongs = this->m_collectionSongs.GetIterator();
 	while (i_collectionSongs.HasNext())
 	{
 		if (artist == "")// All songs
