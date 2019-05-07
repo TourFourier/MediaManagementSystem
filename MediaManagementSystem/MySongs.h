@@ -16,8 +16,8 @@ public:
 	MySongs();
 	~MySongs();
 
-	Collection<Folder> GetFolderCollection() { return m_collectionFolders; }
-	Collection<Song> GetSongCollection() { return m_collectionSongs; }
+	Collection<Folder>& GetFolderCollection() { return m_collectionFolders; }
+	Collection<Song>& GetSongCollection() { return m_collectionSongs; }
 
 
 	bool AddFolder(const char* folderName, const char* superFolder="");

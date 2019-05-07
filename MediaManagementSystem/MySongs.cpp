@@ -106,6 +106,7 @@ Song* MySongs::SongExists(string title)
 }
 
 
+
 bool MySongs::AddFolder(const char* folderName, const char* superFolder)
 {
 	//returns false if 1)name of file already exists both in current folder and sub 
@@ -152,10 +153,6 @@ bool MySongs::AddFolder(const char* folderName, const char* superFolder)
 // TODO: ADD CHECK FOR EMPTY STRINGS AND NULL POINTERS
 bool MySongs::AddSong(string title, const char* artist, const char* lyrics, const char* folder)
 {
-	transform(title.begin(), title.end(), title.begin(), ::tolower);
-
-	//TODO: revert the returned int results back to a string
-
 	Song* existingSong;
 	Folder* existingFolder;
 	// ie. Not placing new song in an existing directory
@@ -177,7 +174,7 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 	else
 	{
 		// Check if the directory exists before trying to add new song to it
-		if ((existingFolder = this->FolderExists(folder)) != nullptr)
+		if ((existingFolder = this->FolderExistsRecursive(folder)) != nullptr)
 		{
 			// Check if directory contains a song with given name
 			if (!(existingFolder->SongExists(title)))// song with given name does not exist therefor add new song and return true
@@ -220,14 +217,14 @@ bool MySongs::RemoveSong(string title, const char* folderName)
 				}
 			}
 		}
-		// Song doesn't exist
+		// Song doesn't exist in current area
 		return false;
 	}
 	// deleting song from a directory
 	else
 	{
 		// If the folder exists and contains a song with given name
-		if ((existingFolder = this->FolderExists(folderName)) != nullptr && (existingFolder->SongExists(title)))
+		if ((existingFolder = this->FolderExistsRecursive(folderName)) != nullptr && (existingFolder->SongExists(title)))
 		{
 			Iterator<Song> i_collectionSongs = existingFolder->GetSongCollection().GetIterator();
 			while (i_collectionSongs.HasNext())
@@ -331,6 +328,6 @@ bool MySongs::PrintSongs()
 
 bool MySongs::PrintFolderSongs(const char* folderName)
 {
-	//// Get iterator and iterate over songs and cout the GetData().m_sTitle;
+	//// Get iterator for songCollection in particular folder,and iterate over songs(nodes) and cout GetLowerCaseTitle()
 	return true;
 }

@@ -19,7 +19,7 @@ public:
 	//Alternative way to give iterator acess to list: friend class Iterator<T>;
 	~Collection() {} // TODO: ADD DELETE IN DESTRUCTOR TO m_pCollectionListHead TO DELETE THE LIST AND FREE THE HEAP??
 
-	void Add( T& newFile);
+	void Add( T newFile);
 	int Size();
 	Iterator<T>& GetIterator() 
 	{
@@ -35,7 +35,7 @@ public:
 
 
 template<class T>
-void Collection<T>::Add( T& newFile) // changed T to T&
+void Collection<T>::Add(T newFile) 
 {
 	// If list is empty, asign node as head/first node
 	if (m_pCollectionListHead == nullptr) 

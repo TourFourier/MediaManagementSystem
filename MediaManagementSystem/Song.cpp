@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <string>
+#include<algorithm>
 #include "Song.h"
 
 using std::string;
@@ -9,7 +10,10 @@ Song::Song(string title, string artist, string lyrics):
 	m_sTitle(title),
 	m_sArtist(artist),
 	m_sLyrics(lyrics)
-{}
+{
+	transform(title.begin(), title.end(), title.begin(), ::tolower);
+	m_lowerCaseTitle = title;
+}
 
 
 Song::~Song()
@@ -19,7 +23,7 @@ Song::~Song()
 
 bool Song::operator >(const Song& s)
 {
-		if (m_sTitle > s.m_sTitle) 
+		if (m_lowerCaseTitle > s.m_lowerCaseTitle)
 		{
 			return true;
 		}

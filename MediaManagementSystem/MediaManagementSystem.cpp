@@ -77,10 +77,10 @@ int main()
 			Iterator<Folder> itr2 = mySongs.GetFolderCollection().GetIterator();
 			//while (itr2.HasNext())
 			//{
-			Folder f = itr2.Next();
-				cout << f.GetFolderName() << endl;
-				Folder g = f.GetFolderCollection().GetIterator().Next();
-				cout << g.GetFolderName() << endl;
+			//Folder f = itr2.Next();// the GetIterator() is returning an iterator that does not point to Folders first node rather null
+				cout << itr2.Next().GetFolderCollection().GetIterator().Next().GetFolderName() << endl;
+				//Folder g = f.GetFolderCollection().GetIterator().Next();
+				//cout << g.GetFolderName() << endl;
 
 			//}
 		/*	mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "old");
