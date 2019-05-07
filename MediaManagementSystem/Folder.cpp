@@ -34,7 +34,7 @@ Folder::~Folder()
 
 }*/
 
-Song* MySongs::SongExists(string title)
+Song* Folder::SongExists(string title)
 {
 	Song* retVal = nullptr;
 	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
