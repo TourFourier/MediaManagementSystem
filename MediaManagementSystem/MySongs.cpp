@@ -25,23 +25,6 @@ MySongs::~MySongs()
 
 
 
-/*Folder* MySongs::GetFolder(const char* folderName)
-{
-	Folder* retVal;
-	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
-
-	// Iterate over the collection of folders and check if the name of each existing folder matches the name of the new folder we are creating
-	while (i_collectionFolders.HasNext())
-	{
-		retVal = &(i_collectionFolders.Next());
-		if (retVal->GetFolderName() == folderName)
-		{
-			return retVal;
-		}
-	}
-
-}*/
-
 Folder* MySongs::FolderExists(const char* folderName)
 {
 	Folder* retVal = nullptr;
@@ -243,7 +226,7 @@ bool MySongs::RemoveSong(string title, const char* folderName)
 	}
 }
 
-bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
+bool MySongs::RemoveFolder(const char* folderName)
 {
 	Folder* existingFolder;
 	if ((existingFolder = FolderExistsRecursive(folderName)) != nullptr)
@@ -469,7 +452,7 @@ void MySongs::swap(string *xp, string *yp)
 	*yp = temp;
 }
 
-// An optimized version of Bubble Sort 
+// A case insensitive version of Bubble Sort 
 void  MySongs::bubbleSortCaseIns(string arr[], int n)
 {
 	int i, j;
@@ -510,7 +493,7 @@ int MySongs::SongTitleRec(string* titles, int index)
 	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
 	while (i_collectionFolders.HasNext())
 	{
-		index = SongTitleRec(titles, index);
+		index = i_collectionFolders.Next().SongTitleRec(titles, index);
 	}
 	return index;
 }
@@ -531,7 +514,7 @@ int MySongs::SongTitleArtistRec(string* titles, const char* artist, int index)
 	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
 	while (i_collectionFolders.HasNext())
 	{
-		index = SongTitleArtistRec(titles, artist, index);
+		index = i_collectionFolders.Next().SongTitleArtistRec(titles, artist, index);
 	}
 	return index;
 }
@@ -557,24 +540,3 @@ bool MySongs::FolderRemoveRecursive(const char* folderName)
 	}
 	return false;
 }
-/*Collection<Folder>* MySongs::GetSuperFolderRec(const char* folderName)
-{
-	Folder* retVal = nullptr;
-	Collection<Folder>* temp = nullptr;
-	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
-	while (i_collectionFolders.HasNext())
-	{
-		retVal = &(i_collectionFolders.Next());
-		if (retVal->GetFolderName() == folderName)
-		{
-			return ;
-		}
-		retVal = retVal->FolderExistsRecursive(folderName);
-		if (retVal != nullptr)
-		{
-			return ;
-		}
-		retVal = nullptr;
-	}
-	return ;
-}*/

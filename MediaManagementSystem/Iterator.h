@@ -12,13 +12,11 @@ private:
 	bool removeNodeCalled = false;
 	TNode<T>* m_pPrevious = nullptr;
 	TNode<T>* m_pCurrent = nullptr;
-	TNode<T>** m_pBegin = nullptr;
-	//TNode<T>** m_pPtrToHead = nullptr;
+	TNode<T>** m_pPtrToHead = nullptr;// Change name to m_pPtrToHead
 public:
-	Iterator(TNode<T>** head)//, TNode<T>** hh)
+	Iterator(TNode<T>** head)
 	{
-		m_pBegin = head;
-		//m_pPtrToHead = hh;
+		m_pPtrToHead = head;
 	}
 	~Iterator() {}
 
@@ -35,10 +33,10 @@ T& Iterator<T>::Next()
 	T* retVal;
 	static T* somethingToReturn = new T;// No mem leak because its static
 	// Haven't started traversing list and the list is not empty
-	if (haventStarted  &&  *m_pBegin != nullptr)
+	if (haventStarted  &&  *m_pPtrToHead != nullptr)
 	{
 		// Point to first node and retrieve the value and save it in retVal
-		m_pCurrent = *m_pBegin;
+		m_pCurrent = *m_pPtrToHead;
 		retVal = &(m_pCurrent->GetData()); //m_pCurrent->GetData() - returns a reference to the data stored in the node, therefor store its address in retVal pointer and return address
 		haventStarted = false;
 		calledNext = true;
@@ -72,7 +70,7 @@ template<class T>
 bool Iterator<T>::HasNext()
 {
 	// Haven't started traversing list, and there are nodes in list 
-	if (haventStarted  &&  *m_pBegin != nullptr)  
+	if (haventStarted  &&  *m_pPtrToHead != nullptr)  
 	{
 		return true;
 	}
@@ -107,9 +105,9 @@ void Iterator<T>::Remove()
 		else // Removing current first node 
 		{
 			m_pCurrent = m_pCurrent->GetNext();
-			delete *m_pBegin;
-			*m_pBegin = m_pCurrent;
-			//*m_pPtrToHead = m_pBegin;
+			delete *m_pPtrToHead;
+			*m_pPtrToHead = m_pCurrent;
+			//*m_pPtrToHead = m_pPtrToHead;
 		}
 		calledNext = false;
 		removeNodeCalled = true;

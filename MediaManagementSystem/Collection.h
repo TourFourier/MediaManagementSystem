@@ -12,23 +12,14 @@ private:
 	void bubbleSort(T arr[], int n);
 	void swap(T *xp, T *yp);
 public:
-	Collection()
-	{
-		//m_collectionIterator.m_pBegin = &m_pCollectionListHead;
-
-	}
-	//Alternative way to give iterator acess to list: friend class Iterator<T>;
+	Collection(){}
 	~Collection() {} // TODO: ADD DELETE IN DESTRUCTOR TO m_pCollectionListHead TO DELETE THE LIST AND FREE THE HEAP??
 
 	void Add( T newFile);
 	int Size();
 	Iterator<T> GetIterator() 
 	{
-		// Null Iterator's m_pCurrent pointer, so that Iterator's Next() method gives access to the first element in  the list
-		//m_collectionIterator.m_pCurrent = nullptr;
-		//m_collectionIterator.m_pPrevious = nullptr;
-		//return m_collectionIterator; 
-
+	 // One alternative way to give iterator acess to list: friend class Iterator<T>;
 		Iterator<T> itr(/*this->m_pCollectionListHead,*/ &(this->m_pCollectionListHead));
 		return itr;
 	}

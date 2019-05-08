@@ -23,7 +23,8 @@ public:
 	bool FolderRemoveRecursive(const char* folderName);
 	void CreateSubFolder(const char* folderName);
 	void PrintSongCollection(const char* artist);
-
+	int SongTitleRec(string* titles, int index);
+	int SongTitleArtistRec(string* titles, const char* artist, int index = 0);
 	bool operator>(const Folder& f);
 };
 
