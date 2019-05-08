@@ -13,10 +13,12 @@ private:
 	TNode<T>* m_pPrevious = nullptr;
 	TNode<T>* m_pCurrent = nullptr;
 	TNode<T>** m_pBegin = nullptr;
+	//TNode<T>** m_pPtrToHead = nullptr;
 public:
-	Iterator(TNode<T>* head)
+	Iterator(TNode<T>** head)//, TNode<T>** hh)
 	{
-		m_pBegin = &head;
+		m_pBegin = head;
+		//m_pPtrToHead = hh;
 	}
 	~Iterator() {}
 
@@ -38,7 +40,6 @@ T& Iterator<T>::Next()
 		// Point to first node and retrieve the value and save it in retVal
 		m_pCurrent = *m_pBegin;
 		retVal = &(m_pCurrent->GetData()); //m_pCurrent->GetData() - returns a reference to the data stored in the node, therefor store its address in retVal pointer and return address
-		//m_pPrevious = *m_pBegin;
 		haventStarted = false;
 		calledNext = true;
 	}
@@ -108,6 +109,7 @@ void Iterator<T>::Remove()
 			m_pCurrent = m_pCurrent->GetNext();
 			delete *m_pBegin;
 			*m_pBegin = m_pCurrent;
+			//*m_pPtrToHead = m_pBegin;
 		}
 		calledNext = false;
 		removeNodeCalled = true;

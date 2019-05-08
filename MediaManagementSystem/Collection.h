@@ -29,7 +29,7 @@ public:
 		//m_collectionIterator.m_pPrevious = nullptr;
 		//return m_collectionIterator; 
 
-		Iterator<T> itr(this->m_pCollectionListHead);
+		Iterator<T> itr(/*this->m_pCollectionListHead,*/ &(this->m_pCollectionListHead));
 		return itr;
 	}
 };

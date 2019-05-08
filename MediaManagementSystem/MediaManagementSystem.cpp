@@ -44,16 +44,16 @@ int main()
 	cout << anagram("Hello World!", "Hello Word!");
 }*/
 int main()
-{
+{	//Remove parameter superfolder from method RemoveFolder()
 
-	
+/*
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
 		stringCollection.Add("World");
 
 		Iterator<string> itr = stringCollection.GetIterator();
 		while (itr.HasNext())
-		/*{
+		{
 			cout << itr.Next() << endl;
 		}
 		itr = stringCollection.GetIterator();
@@ -92,27 +92,52 @@ int main()
 		if (!itr.HasNext())
 		{
 			cout << "No more elements!" << endl;
-		}*/
+		}
+*/
 	
-/*	MySongs mySongs;
-	mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
-	mySongs.AddFolder("Hebrew");
-	mySongs.AddFolder("old", "Hebrew");
-	mySongs.AddFolder("new", "Hebrew");
+	MySongs mySongs;
+	//mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
+	mySongs.AddFolder("hebrew");
+	mySongs.AddFolder("old" , "hebrew");
+	//mySongs.AddFolder("new", "Hebrew");
 	mySongs.AddSong("Road of the King", "Gili", "Road of the king is my onlyroute...", "old");
-	mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
-	mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
-	mySongs.PrintSongs();
-	//>>>>>mySongs.Play("MATAM EX4");
+	mySongs.AddSong("Road of the queen", "Prison 6", "Road of the queen is myonly route..." , "hebrew");
+	mySongs.PrintFolderSongs("hebrew" , "Prison 6");
+	cout << endl;
+	mySongs.PrintFolderSongs("old" , "Gili");
+	cout << endl;
+	cout << endl;
+
+	mySongs.Play("Road of the queen", "hebrew");
+	mySongs.Play("Road of the King", "old");
+	//mySongs.RemoveSong("Road of the King", "old");
+	//mySongs.Play("Road of the King", "old");
+	//mySongs.MoveSong("Road of the King", "hebrew", "old");
+	mySongs.RemoveFolder("hebrew");
+
+	cout << endl;
+	cout << endl;
+	//cout << "moving song" << endl;
+	//mySongs.Play("Road of the King", "hebrew");
+
+
+	//mySongs.PrintSongs();
+	mySongs.Play("Road of the King", "old");
+
+
+
+	//Iterator<Folder> itr = mySongs.GetFolderCollection().GetIterator();
+	//while (itr.HasNext())
+	//{
+		//cout << itr.Next().GetFolderName() << endl;
+	//}
+	//mySongs.PrintFolderSongs("new", "Prison 6");
+	//mySongs.AddSong("Road of the King", "Prison 6", "Road of the king is myonly route...", "new");
 	//>>>>>mySongs.MoveSong("MATAM EX4", "Hebrew");
 	//>>>>>mySongs.PrintFolderSongs("Hebrew");...
-	mySongs.MoveSong("MATAM EX4", "new", "Hebrew");
 	/*.Play("MATAM EX4", "Hebrew"); // This will fail!
 	mySongs.PrintSongs("Shlomo"); // Will print nothing.
-	mySongs.PrintFolderSongs("new", "Prison 6");
-	mySongs.RemoveSong("Road of the King"); // This will fail!
-	mySongs.RemoveSong("Road of the King", "old");
-	mySongs.RemoveFolder("old");*/
+	mySongs.RemoveSong("Road of the King"); // This will fail!*/
 	return 0;
 }
 

@@ -247,7 +247,7 @@ bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 {
 	Folder* existingFolder;
 	// Folder to remove is not in a directory
-	if (superFolder == "")
+	/*if (superFolder == "")
 	{
 		// Folder exists with this name therefor delete it
 		if ((existingFolder = FolderExists(folderName)) != nullptr)
@@ -283,7 +283,24 @@ bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 		}
 		// either folder does not exist or song with given name does not exist, therefor return false
 		return false;
+	}*/
+
+	// TODO: i NEED TO GET POINTER TO SUPER FOLDER
+	// If a folder exists with given name
+	if ((existingFolder = this->FolderExistsRecursive(folderName)) != nullptr)
+	{
+		Iterator<Folder> i_collectionFolder = existingFolder->GetFolderCollection().GetIterator();
+		while (i_collectionFolder.HasNext())
+		{
+			if (i_collectionFolder.Next().GetFolderName() == folderName)
+			{
+				i_collectionFolder.Remove();
+				return true;
+			}
+		}
 	}
+	// either folder does not exist or song with given name does not exist, therefor return false
+	return false;
 }
 
 bool MySongs::MoveSong( string title, const char* destinationFolderName, const char* sourceFolderName)
