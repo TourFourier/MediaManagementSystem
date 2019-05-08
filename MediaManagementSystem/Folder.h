@@ -20,6 +20,7 @@ public:
 	Song* SongExists(const string title);
 	Folder* FolderExists(const char* folderName);
 	Folder* FolderExistsRecursive(const char* folderName);
+	bool FolderRemoveRecursive(const char* folderName);
 	void CreateSubFolder(const char* folderName);
 	void PrintSongCollection(const char* artist);
 

@@ -113,7 +113,7 @@ int main()
 	//mySongs.RemoveSong("Road of the King", "old");
 	//mySongs.Play("Road of the King", "old");
 	//mySongs.MoveSong("Road of the King", "hebrew", "old");
-	mySongs.RemoveFolder("hebrew");
+	mySongs.RemoveFolder("old");
 
 	cout << endl;
 	cout << endl;
@@ -122,7 +122,7 @@ int main()
 
 
 	//mySongs.PrintSongs();
-	mySongs.Play("Road of the King", "old");
+	//mySongs.Play("Road of the King", "old");
 
 
 

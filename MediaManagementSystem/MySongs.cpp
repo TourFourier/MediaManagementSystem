@@ -246,6 +246,14 @@ bool MySongs::RemoveSong(string title, const char* folderName)
 bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 {
 	Folder* existingFolder;
+	if ((existingFolder = FolderExistsRecursive(folderName)) != nullptr)
+	{
+		FolderRemoveRecursive(folderName);
+		return true;
+	}
+	// Folder does not exist, therefor return false
+	return false;
+
 	// Folder to remove is not in a directory
 	/*if (superFolder == "")
 	{
@@ -285,22 +293,7 @@ bool MySongs::RemoveFolder(const char* folderName, const char* superFolder)
 		return false;
 	}*/
 
-	// TODO: i NEED TO GET POINTER TO SUPER FOLDER
 	// If a folder exists with given name
-	if ((existingFolder = this->FolderExistsRecursive(folderName)) != nullptr)
-	{
-		Iterator<Folder> i_collectionFolder = existingFolder->GetFolderCollection().GetIterator();
-		while (i_collectionFolder.HasNext())
-		{
-			if (i_collectionFolder.Next().GetFolderName() == folderName)
-			{
-				i_collectionFolder.Remove();
-				return true;
-			}
-		}
-	}
-	// either folder does not exist or song with given name does not exist, therefor return false
-	return false;
 }
 
 bool MySongs::MoveSong( string title, const char* destinationFolderName, const char* sourceFolderName)
@@ -364,7 +357,6 @@ bool MySongs::MoveSong( string title, const char* destinationFolderName, const c
 
 	return true;
 }
-
 
 bool MySongs::Play(const char* title, const char* folderName)
 {
@@ -441,8 +433,6 @@ bool MySongs::PrintFolderSongs(const char* folderName, const char* artist)
 	return true;
 }
 
-
-
 bool MySongs::PrintSongs(const char* artist)
 {
 	int i;
@@ -470,8 +460,6 @@ bool MySongs::PrintSongs(const char* artist)
 	}
 	return true;
 }
-
-
 
 
 void MySongs::swap(string *xp, string *yp)
@@ -511,9 +499,6 @@ void  MySongs::bubbleSortCaseIns(string arr[], int n)
 	}
 }
 
-
-
-
 int MySongs::SongTitleRec(string* titles, int index)
 {
 	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
@@ -550,3 +535,46 @@ int MySongs::SongTitleArtistRec(string* titles, const char* artist, int index)
 	}
 	return index;
 }
+
+bool MySongs::FolderRemoveRecursive(const char* folderName)
+{
+	bool flag;
+	Folder* retVal = nullptr;
+	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	while (i_collectionFolders.HasNext())
+	{
+		retVal = &(i_collectionFolders.Next());
+		if (retVal->GetFolderName() == folderName)
+		{
+			i_collectionFolders.Remove();
+			return true;
+		}
+		flag = retVal->FolderRemoveRecursive(folderName);
+		if (flag)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+/*Collection<Folder>* MySongs::GetSuperFolderRec(const char* folderName)
+{
+	Folder* retVal = nullptr;
+	Collection<Folder>* temp = nullptr;
+	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	while (i_collectionFolders.HasNext())
+	{
+		retVal = &(i_collectionFolders.Next());
+		if (retVal->GetFolderName() == folderName)
+		{
+			return ;
+		}
+		retVal = retVal->FolderExistsRecursive(folderName);
+		if (retVal != nullptr)
+		{
+			return ;
+		}
+		retVal = nullptr;
+	}
+	return ;
+}*/

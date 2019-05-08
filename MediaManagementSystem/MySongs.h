@@ -19,6 +19,8 @@ class MySongs
 	void swap(string *xp, string *yp);
 	void  bubbleSortCaseIns(string arr[], int n);
 	int SongTitleArtistRec(string* titles, const char* artist, int index = 0);
+	//Collection<Folder>* GetSuperFolderRec(const char* folderName);
+	bool FolderRemoveRecursive(const char* folderName);
 
 
 public:

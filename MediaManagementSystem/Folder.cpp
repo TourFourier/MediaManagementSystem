@@ -92,6 +92,28 @@ Folder* Folder::FolderExistsRecursive(const char* folderName)
 	return retVal;
 }
 
+bool Folder::FolderRemoveRecursive(const char* folderName)
+{
+	bool flag;
+	Folder* retVal = nullptr;
+	Iterator<Folder> i_collectionFolders = m_collectionFolders.GetIterator();
+	while (i_collectionFolders.HasNext())
+	{
+		retVal = &(i_collectionFolders.Next());
+		if (retVal->GetFolderName() == folderName)
+		{
+			i_collectionFolders.Remove();
+			return true;
+		}
+		flag = retVal->FolderRemoveRecursive(folderName);
+		if (flag)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void Folder::PrintSongCollection(const char* artist)
 {
 	Song currentSong;
