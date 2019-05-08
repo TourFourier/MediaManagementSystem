@@ -384,13 +384,13 @@ bool MySongs::Play(const char* title, const char* folderName)
 bool MySongs::PrintFolderSongs(const char* folderName, const char* artist)
 {
 	Folder* folderToPrint = FolderExistsRecursive(folderName);
-	Iterator<Song> i_collectionSongs;
+	
 	Song currentSong;
 
 	// Print root song collection
 	if (folderName == "")
 	{
-		i_collectionSongs = m_collectionSongs.GetIterator();
+		Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
 		while (i_collectionSongs.HasNext())
 		{
 			if (artist == "")// All songs
@@ -515,12 +515,14 @@ int MySongs::SongTitleRec(string* titles, int index)
 
 int MySongs::SongTitleArtistRec(string* titles, const char* artist, int index)
 {
+	Song currentSong;
 	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
 	while (i_collectionSongs.HasNext())
 	{
-		if (i_collectionSongs.Next().GetArtist() == artist)
+		currentSong = i_collectionSongs.Next();
+		if (currentSong.GetArtist() == artist)
 		{
-			titles[index] = i_collectionSongs.m_pCurrent->GetData().GetTitle();
+			titles[index] = currentSong.GetTitle();
 			index++;
 		}
 	}

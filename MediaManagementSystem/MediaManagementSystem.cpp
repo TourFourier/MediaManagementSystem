@@ -8,23 +8,52 @@
 #include "Song.h"
 #include "Folder.h"
 #include "MySongs.h"
+//#define SIZE 26
 
 using std::ostream;
 using std::cout;
 using std::endl;
 using std::string;
-
+/*
+bool anagram(const char* str1, const char* str2)
+{
+	int arrOfLetters[SIZE] = { 0 }, i;
+	for (i = 0; i < strlen(str1); i++)
+	{
+		if (str1[i] <= 'z' && str1[i] >= 'a')
+			arrOfLetters[str1[i] - 'a'] ++;
+		else if(str1[i] <= 'Z' && str1[i] >= 'A')
+			arrOfLetters[str1[i] - 'A'] ++;	
+	}
+	for (i = 0; i < strlen(str2); i++)
+	{
+		if (str2[i] <= 'z' && str2[i] >= 'a')
+			arrOfLetters[str2[i] - 'a'] --;
+		else if(str2[i] <= 'Z' && str2[i] >= 'A')
+			arrOfLetters[str2[i] - 'A'] --;
+	}
+	for (i = 0; i < SIZE; i++)
+	{
+		if (arrOfLetters[i] != 0)
+			return false;
+	}
+	return true;
+}
+int main()
+{
+	cout << anagram("Hello World!", "Hello Word!");
+}*/
 int main()
 {
 
-	/*
+	
 		Collection<string> stringCollection;
 		stringCollection.Add("Hello");
 		stringCollection.Add("World");
 
 		Iterator<string> itr = stringCollection.GetIterator();
 		while (itr.HasNext())
-		{
+		/*{
 			cout << itr.Next() << endl;
 		}
 		itr = stringCollection.GetIterator();
@@ -63,9 +92,9 @@ int main()
 		if (!itr.HasNext())
 		{
 			cout << "No more elements!" << endl;
-		}
-	*/
-	MySongs mySongs;
+		}*/
+	
+/*	MySongs mySongs;
 	mySongs.AddSong("MATAM EX4", "Ari", "We like C++ programing...");
 	mySongs.AddFolder("Hebrew");
 	mySongs.AddFolder("old", "Hebrew");

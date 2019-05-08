@@ -8,13 +8,13 @@ class Collection
 {
 private:
 	TNode<T>* m_pCollectionListHead = nullptr;
-	Iterator<T> m_collectionIterator;
+	//Iterator<T> m_collectionIterator;
 	void bubbleSort(T arr[], int n);
 	void swap(T *xp, T *yp);
 public:
 	Collection()
 	{
-		m_collectionIterator.m_pBegin = &m_pCollectionListHead;
+		//m_collectionIterator.m_pBegin = &m_pCollectionListHead;
 
 	}
 	//Alternative way to give iterator acess to list: friend class Iterator<T>;
@@ -22,15 +22,15 @@ public:
 
 	void Add( T newFile);
 	int Size();
-	Iterator<T>& GetIterator() 
+	Iterator<T> GetIterator() 
 	{
 		// Null Iterator's m_pCurrent pointer, so that Iterator's Next() method gives access to the first element in  the list
-		m_collectionIterator.m_pCurrent = nullptr;
-		m_collectionIterator.m_pPrevious = nullptr;
-		return m_collectionIterator; 
+		//m_collectionIterator.m_pCurrent = nullptr;
+		//m_collectionIterator.m_pPrevious = nullptr;
+		//return m_collectionIterator; 
 
-		//Iterator<T> itr(this->m_pCollectionListHead);
-		//return itr;
+		Iterator<T> itr(this->m_pCollectionListHead);
+		return itr;
 	}
 };
 
