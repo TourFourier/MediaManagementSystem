@@ -11,14 +11,15 @@ private:
 	bool calledNext = false;// Used for check when calling Remove()
 	bool removeNodeCalled = false;
 public:
-	// Will point to member pointer to (first node of) list in Collection object; only weak point about this calss is this public member; 
-	//necessary to allow collection class to give me access to its List-head pointer
-	TNode<T>* m_pPrevious = nullptr;
-	TNode<T>* m_pCurrent = nullptr;
-	TNode<T>** m_pBegin = nullptr;
-
 	Iterator() {}
 	~Iterator() {}
+
+	// Will point to member pointer to (first node of) list in Collection object; only weak point about this calss is this public member; 
+	//necessary to allow collection class to give me access to its List-head pointer
+	TNode<T>** m_pBegin = nullptr;
+	TNode<T>* m_pPrevious = nullptr;
+	TNode<T>* m_pCurrent = nullptr;
+
 
 	T& Next();
 	bool HasNext();

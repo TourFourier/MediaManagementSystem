@@ -8,7 +8,7 @@ private:
 	TNode<T>* m_pNext = nullptr;
 public:
 	TNode() {}
-	TNode(T rData) {m_tData = rData;}
+	TNode(T rData):m_tData(rData){}
 	~TNode() {};
 
 	//friend class Iterator<T>;  
@@ -16,7 +16,7 @@ public:
 	T& GetData() { return m_tData; }
 	TNode<T>* GetNext() { return m_pNext; }
 
-	void SetData(T pData) { m_tData = pData; };
+	void SetData(T data) { m_tData = data; };
 	void SetNext(TNode<T>* pPtr) { m_pNext = pPtr; }
 };
 
