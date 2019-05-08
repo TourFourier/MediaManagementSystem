@@ -11,15 +11,15 @@ private:
 	bool calledNext = false;// Used for check when calling Remove()
 	bool removeNodeCalled = false;
 public:
-	Iterator() {}
-	~Iterator() {}
-
 	// Will point to member pointer to (first node of) list in Collection object; only weak point about this calss is this public member; 
 	//necessary to allow collection class to give me access to its List-head pointer
-	TNode<T>** m_pBegin = nullptr;
 	TNode<T>* m_pPrevious = nullptr;
 	TNode<T>* m_pCurrent = nullptr;
+	TNode<T>** m_pBegin = nullptr;
 
+	//Iterator(TNode<T>* head) : m_pBegin(&head) {}
+	Iterator() {}
+	~Iterator() {}
 
 	T& Next();
 	bool HasNext();
@@ -32,7 +32,7 @@ T& Iterator<T>::Next()
 {
 	// retVal must be on the heap to be returned as a reference
 	T* retVal;
-	static T* somethingToReturn = new T;
+	static T* somethingToReturn = new T;// No mem leak because its static
 	// Haven't started traversing list and the list is not empty
 	if (haventStarted  &&  *m_pBegin != nullptr)
 	{
