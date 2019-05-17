@@ -75,20 +75,17 @@ bool MySongs::CreatedSubFolder(const char* subFolder, Folder* superFolder)
 }
 
 // Returns pointer to null if song doesn't exist, otherwise returns a pointer to the song obj.
-Song* MySongs::SongExists(string title)
+bool MySongs::SongExists(string title)
 {
-	Song* retVal = nullptr;
 	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
 	while (i_collectionSongs.HasNext())
 	{
-		retVal = &(i_collectionSongs.Next());
-		if (retVal->GetTitle() == title)
+		if (i_collectionSongs.Next().GetTitle() == title)
 		{
-			return retVal;
+			return true;
 		}
-		retVal = nullptr;
 	}
-	return retVal;
+	return false;
 }
 
 
@@ -139,13 +136,12 @@ bool MySongs::AddFolder(const char* folderName, const char* superFolder)
 // TODO: ADD CHECK FOR EMPTY STRINGS AND NULL POINTERS
 bool MySongs::AddSong(string title, const char* artist, const char* lyrics, const char* folder)
 {
-	Song* existingSong;
 	Folder* existingFolder;
 	// ie. Not placing new song in an existing directory
 	if (folder == "")
 	{
 		// no song exist with this name therefor create song
-		if ((existingSong = SongExists(title)) == nullptr)
+		if (!SongExists(title))
 		{
 			m_collectionSongs.Add(*(new Song(title, artist, lyrics)));
 			m_nTotalNumOfSongs++;
@@ -164,7 +160,7 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 		if ((existingFolder = this->FolderExistsRecursive(folder)) != nullptr)
 		{
 			// Check if directory contains a song with given name
-			if ((existingFolder->SongExists(title)) == nullptr)// song with given name does not exist therefor add new song and return true
+			if (!(existingFolder->SongExists(title)))// song with given name does not exist therefor add new song and return true
 			{
 				existingFolder->GetSongCollection().Add(*(new Song(title, artist, lyrics)));
 				m_nTotalNumOfSongs++;
@@ -182,13 +178,12 @@ bool MySongs::AddSong(string title, const char* artist, const char* lyrics, cons
 
 bool MySongs::RemoveSong(string title, const char* folderName)
 {
-	Song* existingSong;
 	Folder* existingFolder;
 	// Song to remove is not in a directory
 	if (folderName == "")
 	{
 		// song exists with this name therefor delete it
-		if ((existingSong = SongExists(title)) != nullptr)
+		if (SongExists(title))
 		{
 			Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
 			while (i_collectionSongs.HasNext())
@@ -208,7 +203,7 @@ bool MySongs::RemoveSong(string title, const char* folderName)
 	else
 	{
 		// If the folder exists and contains a song with given name
-		if ((existingFolder = this->FolderExistsRecursive(folderName)) != nullptr && (existingFolder->SongExists(title)) != nullptr)
+		if ((existingFolder = this->FolderExistsRecursive(folderName)) != nullptr && (existingFolder->SongExists(title)))
 		{
 			Iterator<Song> i_collectionSongs = existingFolder->GetSongCollection().GetIterator();
 			while (i_collectionSongs.HasNext())
@@ -238,75 +233,53 @@ bool MySongs::RemoveFolder(const char* folderName)
 	return false;
 
 	// Folder to remove is not in a directory
-	/*if (superFolder == "")
-	{
-		// Folder exists with this name therefor delete it
-		if ((existingFolder = FolderExists(folderName)) != nullptr)
-		{
-			Iterator<Folder> i_collectionFolder = m_collectionFolders.GetIterator();
-			while (i_collectionFolder.HasNext())
-			{
-				if (i_collectionFolder.Next().GetFolderName() == folderName)
-				{
-					i_collectionFolder.Remove();
-					return true;
-				}
-			}
-		}
-		// Folder doesn't exist
-		return false;
-	}
-	// deleting folder from a directory
-	else
-	{
-		// If the outer folder exists and contains a folder with given name
-		if ((existingFolder = this->FolderExistsRecursive(superFolder)) != nullptr && (existingFolder->FolderExists(folderName)) != nullptr)
-		{
-			Iterator<Folder> i_collectionFolder = existingFolder->GetFolderCollection().GetIterator();
-			while (i_collectionFolder.HasNext())
-			{
-				if (i_collectionFolder.Next().GetFolderName() == folderName)
-				{
-					i_collectionFolder.Remove();
-					return true;
-				}
-			}
-		}
-		// either folder does not exist or song with given name does not exist, therefor return false
-		return false;
-	}*/
+	
 
 	// If a folder exists with given name
 }
 
 bool MySongs::MoveSong( string title, const char* destinationFolderName, const char* sourceFolderName)
 {
-	Song songToMove;
-	Song* ptrToSong;
 	Folder* sourceFolder = FolderExistsRecursive(sourceFolderName);
 	Folder* destinationFolder = FolderExistsRecursive(destinationFolderName);
-	
+	Song songToMove;
 	// Check if folder(s) and song exist(s). If yes, copy song objects fileds to songToMove and if not return false
 	if (sourceFolderName == "")// No source folder was provided
 	{
-		if (destinationFolder == nullptr  || (ptrToSong = SongExists(title)) == nullptr)
+		if (destinationFolder == nullptr  || (!SongExists(title)))
 		{
 			return false;
 		}
 		else 
 		{
-			songToMove = *ptrToSong;
+			Iterator<Song> itr = m_collectionSongs.GetIterator();
+			while (itr.HasNext())
+			{
+				songToMove = itr.Next();
+				if (songToMove.GetTitle() == title)
+				{
+					break;// Exit the while loop; songToMove now contains the song details
+				}
+			}
 		}
 	}
 	else // A source folder was provided
 	{
-		if (sourceFolder == nullptr || destinationFolder == nullptr  || (ptrToSong = sourceFolder->SongExists(title)) == nullptr)
+		if (sourceFolder == nullptr || destinationFolder == nullptr  || !(sourceFolder->SongExists(title)))
 		{
 			return false;
 		}
 		else
 		{
-			songToMove = *ptrToSong;
+			Iterator<Song> itr = sourceFolder->GetSongCollection().GetIterator();
+			while (itr.HasNext())
+			{
+				songToMove = itr.Next();
+				if (songToMove.GetTitle() == title)
+				{
+					break;// Exit the while loop; songToMove now contains the song details
+				}
+			}
 		}
 	}
 
@@ -343,31 +316,47 @@ bool MySongs::MoveSong( string title, const char* destinationFolderName, const c
 
 bool MySongs::Play(const char* title, const char* folderName)
 {
-	Song* songToPlay;
+	Song songToPlay;
 	Folder* songsFolder = FolderExistsRecursive(folderName);
 	// Check if folder(s) and song exist(s). If not return false
 	if (folderName == "")// No source folder was provided
 	{
-		if ((songToPlay = this->SongExists(title)) == nullptr)
+		if (!(this->SongExists(title)))
 		{
 			return false;
 		}
 		else
 		{
-			songToPlay->PrintSongLyrics();
-			cout << endl;
+			Iterator<Song> itr = m_collectionSongs.GetIterator();
+			while (itr.HasNext())
+			{
+				songToPlay = itr.Next();
+				if (songToPlay.GetTitle() == title)
+				{
+					songToPlay.PrintSongLyrics();
+					cout << endl;
+				}
+			}
 		}
 	}
-	else
+	else// A folder name was provided
 	{
-		if (songsFolder == nullptr  || (songToPlay = songsFolder->SongExists(title)) == nullptr)
+		if (songsFolder == nullptr  || !(songsFolder->SongExists(title)))
 		{
 			return false;
 		}
 		else
 		{
-			songToPlay->PrintSongLyrics();
-			cout << endl;
+			Iterator<Song> itr = FolderExistsRecursive(folderName)->GetSongCollection().GetIterator();
+			while (itr.HasNext())
+			{
+				songToPlay = itr.Next();
+				if (songToPlay.GetTitle() == title)
+				{
+					songToPlay.PrintSongLyrics();
+					cout << endl;
+				}
+			}
 		}
 	}
 	return true;

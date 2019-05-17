@@ -11,7 +11,7 @@ class MySongs
 	Collection<Folder> m_collectionFolders;
 	Collection<Song> m_collectionSongs;
 
-	Song* SongExists(string title);
+	bool SongExists(string title);
 	Folder* FolderExists(const char* folderName);
 	Folder* FolderExistsRecursive(const char* folderName);
 	bool CreatedSubFolder(const char* subFolder, Folder* superFolder);

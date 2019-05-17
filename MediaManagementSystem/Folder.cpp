@@ -19,20 +19,18 @@ Folder::~Folder()
 }
 
 
-Song* Folder::SongExists(string title)
+bool Folder::SongExists(string title)
 {
-	Song* retVal = nullptr;
 	Iterator<Song> i_collectionSongs = m_collectionSongs.GetIterator();
 	while (i_collectionSongs.HasNext())
 	{
-		retVal = &(i_collectionSongs.Next());
-		if (retVal->GetTitle() == title)
+		if (i_collectionSongs.Next().GetTitle() == title)
+
 		{
-			return retVal;
+			return true;
 		}
-		retVal = nullptr;
 	}
-	return retVal;
+	return false;
 }
 
 Folder* Folder::FolderExists(const char* folderName)

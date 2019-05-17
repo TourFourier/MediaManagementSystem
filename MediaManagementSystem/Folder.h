@@ -17,7 +17,7 @@ public:
 	Collection<Song>& GetSongCollection() { return m_collectionSongs; }
 
 	//Folder* GetFolder(const char* folderName);
-	Song* SongExists(const string title);
+	bool SongExists(const string title);
 	Folder* FolderExists(const char* folderName);
 	Folder* FolderExistsRecursive(const char* folderName);
 	bool FolderRemoveRecursive(const char* folderName);
