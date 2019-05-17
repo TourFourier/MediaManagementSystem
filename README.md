@@ -4,25 +4,29 @@ Generic file management API, implemented with static song objects
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+Clone the ReleaseVersion branch (https://github.com/YLeventhal/MediaManagementSystem/tree/ReleaseVersion) to your device.
 
+### Instructions
 
-### Installing
+Instantiate a MySongs object to hold your collection of songs and folders. Your object has a Folders list 
+and a Songs list. A Folder from the list could contain inner folders ad infinitum. 
+Use your objects methods to add/remove/move/play songs and to add/remove folders or to print a folders content.
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
 
 ```
-Give the example
+MySongs myFavoriteSongs;
+
+mySongs.AddFolder("Reggae");
+
+// adding an inner folder to the reggae folder for specific artists.
+mySongs.AddFolder("Bob Marley", "Reggae");
+
+// add a song to the inner folder. Parameters are  title, artist, lyrics and folder to add to.
+mySongs.AddSong("No Woman No Cry", "Bob Marley", "No Woman No Cry...", "Bob Marley");
+
 ```
 
-And repeat
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
